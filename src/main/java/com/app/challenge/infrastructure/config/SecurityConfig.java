@@ -19,7 +19,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http){
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         try {
             return http
                 .csrf(AbstractHttpConfigurer::disable)
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .build();
         } catch (Exception e) {
-            log.error("Error configurando seguridad ",e);
+            log.error("Error configurando seguridad ", e);
             throw new ChallengeHandleException("Error configurando seguridad");
         }
     }
