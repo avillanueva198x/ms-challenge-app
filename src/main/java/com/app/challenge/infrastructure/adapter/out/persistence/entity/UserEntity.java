@@ -26,4 +26,5 @@ public class UserEntity extends BaseModel {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PhoneEntity> phones;
+
 }

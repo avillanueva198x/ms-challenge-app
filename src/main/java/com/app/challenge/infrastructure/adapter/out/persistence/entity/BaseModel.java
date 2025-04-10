@@ -3,7 +3,9 @@ package com.app.challenge.infrastructure.adapter.out.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
@@ -11,7 +13,9 @@ import java.time.LocalDateTime;
 import java.util.Locale;
 
 @MappedSuperclass
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public abstract class BaseModel {
 
     @Transient
