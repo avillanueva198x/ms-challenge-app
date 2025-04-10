@@ -20,11 +20,11 @@ public abstract class BaseModel {
 
     @Transient
     @JsonIgnore
-    protected static final DecimalFormat integerFormat = new DecimalFormat("###,###", DecimalFormatSymbols.getInstance(Locale.forLanguageTag("es_PE")));
+    protected static final DecimalFormat INTEGER_FORMAT = new DecimalFormat("###,###", DecimalFormatSymbols.getInstance(Locale.forLanguageTag("es_PE")));
 
     @Transient
     @JsonIgnore
-    protected static final DecimalFormat decimalFormat = new DecimalFormat("###,###.00", DecimalFormatSymbols.getInstance(Locale.forLanguageTag("es_PE")));
+    protected static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.00", DecimalFormatSymbols.getInstance(Locale.forLanguageTag("es_PE")));
 
     private LocalDateTime created;
     private LocalDateTime modified;

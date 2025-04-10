@@ -1,5 +1,7 @@
 package com.app.challenge.infrastructure.config;
 
+import com.app.challenge.shared.exception.ChallengeHandleException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -10,30 +12,34 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(AbstractHttpConfigurer::disable) // Para permitir H2-console sin CSRF
-            .headers(headers -> headers
-                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin) // <- ESTO PERMITE H2 EN IFRAMES
-            )
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    new AntPathRequestMatcher("/h2-console/**"),
-                    new AntPathRequestMatcher("/swagger-ui/**"),
-                    new AntPathRequestMatcher("/swagger-ui.html"),
-                    new AntPathRequestMatcher("/v3/api-docs/**"),
-                    new AntPathRequestMatcher("/api-docs/**"),
-                    new AntPathRequestMatcher("/")
-                ).permitAll()
-                .anyRequest().permitAll() // Puedes restringir después si lo necesitas
-            )
-            .httpBasic(Customizer.withDefaults());
-
-        return http.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http){
+        try {
+            return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers(
+                        new AntPathRequestMatcher("/h2-console/**"),
+                        new AntPathRequestMatcher("/swagger-ui/**"),
+                        new AntPathRequestMatcher("/swagger-ui.html"),
+                        new AntPathRequestMatcher("/v3/api-docs/**"),
+                        new AntPathRequestMatcher("/api-docs/**"),
+                        new AntPathRequestMatcher("/")
+                    ).permitAll()
+                    .anyRequest().permitAll()
+                )
+                .httpBasic(Customizer.withDefaults())
+                .build();
+        } catch (Exception e) {
+            log.error("Error configurando seguridad ",e);
+            throw new ChallengeHandleException("Error configurando seguridad");
+        }
     }
 }

@@ -17,14 +17,14 @@ public class PasswordValidator implements ConstraintValidator<ValidPassword, Str
 
     @Override
     public void initialize(ValidPassword constraintAnnotation) {
-        this.pattern = Pattern.compile(regexProps.getPassword());
+        this.pattern = Pattern.compile(this.regexProps.getPassword());
     }
 
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
-        if (password == null || !pattern.matcher(password).matches()) {
+        if (password == null || !this.pattern.matcher(password).matches()) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(regexProps.getMessage())
+            context.buildConstraintViolationWithTemplate(this.regexProps.getMessage())
                 .addConstraintViolation();
             return false;
         }

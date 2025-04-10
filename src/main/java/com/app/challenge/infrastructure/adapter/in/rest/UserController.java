@@ -23,7 +23,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@Valid @RequestBody CreateUserRequest request) {
-        var response = createUserHandler.handle(request);
+        var response = this.createUserHandler.handle(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

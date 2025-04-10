@@ -15,9 +15,9 @@ public class CreateUserHandler {
     private final UserMapper userMapper;
 
     public UserResponse handle(CreateUserRequest request) {
-        var user = userMapper.toDomain(request);
-        var created = createUserUseCase.createUser(user);
-        return userMapper.toResponse(created);
+        var user = this.userMapper.toDomain(request);
+        var created = this.createUserUseCase.createUser(user);
+        return this.userMapper.toResponse(created);
     }
 
 }

@@ -24,14 +24,14 @@ public class JwtUtil {
      */
     public String generateToken(User user) {
         Date now = new Date();
-        Date exp = new Date(now.getTime() + 3600000); // 1 hora
+        Date exp = new Date(now.getTime() + 3_600_000); // 1 hora
 
         return Jwts.builder()
             .setSubject(user.getEmail())
             .claim("name", user.getName())
             .setIssuedAt(now)
             .setExpiration(exp)
-            .signWith(key)
+            .signWith(this.key)
             .compact();
     }
 }
