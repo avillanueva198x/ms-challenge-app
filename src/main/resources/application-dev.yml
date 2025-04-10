@@ -23,7 +23,13 @@ app:
 
 logging:
     level:
-        root: ERROR
-        org.springdoc: ERROR
+        root: INFO
+        org.springdoc: DEBUG
+        org.hibernate.SQL: ERROR
+        org.hibernate.type.descriptor.sql: TRACE
+        org.springframework.boot.autoconfigure: INFO
         org.springframework.web: DEBUG
-        org.springframework.boot.autoconfigure: DEBUG
+        org.springframework.web.servlet.DispatcherServlet: DEBUG
+        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: INFO
+    file:
+        name: logs/dev-app.log

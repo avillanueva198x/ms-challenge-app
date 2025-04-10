@@ -23,4 +23,8 @@ app:
 logging:
     level:
         root: INFO
+        org.hibernate.SQL: WARN
         org.springframework.web: INFO
+        org.springframework.boot.autoconfigure: WARN
+    file:
+        name: logs/qa-app.log
