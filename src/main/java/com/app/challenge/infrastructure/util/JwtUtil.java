@@ -30,7 +30,7 @@ public class JwtUtil {
 				.claim("name", user.getName())
 				.setIssuedAt(now)
 				.setExpiration(exp)
-				.signWith(key)
+				.signWith(this.key)
 				.compact();
 	}
 }
