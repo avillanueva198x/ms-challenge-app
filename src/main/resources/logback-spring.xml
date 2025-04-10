@@ -1,15 +1,57 @@
-<configuration>
-    <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %class{0}.%method:%line - [%X{X-Correlation-Id}] %msg%n" />
+<configuration scan="true">
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- Patrón legible para consola local (desarrollo) -->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] - [%X{X-Correlation-Id}] - %-5level %logger{36} - %msg%n"/>
+
+    <!-- Appender para consola legible -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
     </appender>
 
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-    </root>
+    <!-- Appender para logs en formato JSON (observabilidad) -->
+    <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>timestamp</fieldName>
+                </timestamp>
+                <loggerName>
+                    <fieldName>logger</fieldName>
+                </loggerName>
+                <pattern>
+                    <pattern>
+                        {
+                        "level": "%level",
+                        "thread": "%thread",
+                        "correlationId": "%X{X-Correlation-Id}",
+                        "message": "%message"
+                        }
+                    </pattern>
+                </pattern>
+                <stackTrace>
+                    <fieldName>stack_trace</fieldName>
+                </stackTrace>
+            </providers>
+        </encoder>
+    </appender>
+
+    <!-- Configuración para perfil "dev" -->
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <!-- Configuración para perfil "prod" -->
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="JSON"/>
+        </root>
+    </springProfile>
 
 </configuration>
