@@ -1,4 +1,4 @@
-# BCI - Registro de Usuarios (Reto Técnico)
+# POC - Registro de Usuarios (Reto Técnico)
 
 API RESTful desarrollada en Java 17 con Spring Boot 3, orientada al registro de usuarios. Implementa arquitectura hexagonal (Domain-Driven Design), principios SOLID, Clean Code, y buenas prácticas de seguridad, escalabilidad y mantenibilidad.
 

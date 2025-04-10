@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+    ms-challenge-app:
+        build: .
+        container_name: ms-challenge-app
+        ports:
+            - "8080:8080"
+        environment:
+            SPRING_PROFILES_ACTIVE: dev
+            JWT_SECRET: dev-secret
+            MYSQL_HOST: db
+            MYSQL_PORT: 3306
+            MYSQL_DB: app_db
+            MYSQL_USER: app_user
+            MYSQL_PASSWORD: app_pass
+        depends_on:
+            - db
+        networks:
+            - backend
+
+    db:
+        image: mysql:8
+        container_name: mysql-db
+        restart: always
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_DATABASE: app_db
+            MYSQL_USER: app_user
+            MYSQL_PASSWORD: app_pass
+        volumes:
+            - mysql_data:/var/lib/mysql
+        networks:
+            - backend
+
+networks:
+    backend:
+        driver: bridge
+
+volumes:
+    mysql_data:
