@@ -1,10 +1,8 @@
 spring:
-    profiles:
-        active: qa
     datasource:
-        url: jdbc:postgresql://<qa-db-host>:5432/dbname
-        username: qa_user
-        password: qa_password
+        url: jdbc:mysql://localhost:3306/DB_CHALLENGE
+        username: root
+        password: root
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
