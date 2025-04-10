@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copiar archivos de Gradle y de la aplicación
 COPY build.gradle.kts settings.gradle.kts gradlew ./
-COPY gradle ./gradle
+COPY ../gradle ./gradle
 
 # Otorgar permisos de ejecución a gradlew
 RUN chmod +x ./gradlew
@@ -15,7 +15,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew --no-daemon dependencies
 
 # Copiar el código fuente de la aplicación
-COPY src ./src
+COPY ../src ./src
 
 # Obtener fecha y hora de compilación y BUILD_ID de Jenkins
 ARG BUILD_DATE

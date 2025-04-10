@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
     ms-challenge-app:
-        build: .
+        build: ..
         container_name: ms-challenge-app
         ports:
             - "8080:8080"
