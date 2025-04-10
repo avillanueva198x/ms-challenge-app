@@ -10,14 +10,14 @@ plugins {
 }
 
 checkstyle {
-    toolVersion = '10.12.1' // Verifica la versión disponible
+    toolVersion = '10.12.1'
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
 
 pmd {
     toolVersion = '6.55.0'
     ruleSetFiles = files('config/pmd/ruleset.xml')
-    ruleSets = [] // evita las reglas por defecto de PMD
+    ruleSets = []
 }
 
 group = 'com.app'
