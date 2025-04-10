@@ -27,7 +27,7 @@ public class UserEntityMapper {
             PhoneEntity pe = new PhoneEntity();
             pe.setNumber(p.getNumber());
             pe.setCitycode(p.getCityCode());
-            pe.setContrycode(p.getCountryCode());
+            pe.setCountrycode(p.getCountryCode());
             pe.setUser(entity);
             return pe;
         }).toList();
@@ -38,7 +38,7 @@ public class UserEntityMapper {
 
     public User toDomain(UserEntity entity) {
         List<Phone> phones = entity.getPhones().stream()
-            .map(p -> new Phone(p.getNumber(), p.getCitycode(), p.getContrycode()))
+            .map(p -> new Phone(p.getNumber(), p.getCitycode(), p.getCountrycode()))
             .toList();
 
         return new User(

@@ -18,10 +18,18 @@ public class UserEntity extends BaseModel {
     @Id
     private UUID id;
 
+    @Column(nullable = false, length = 100)
     private String name;
+
+    @Column(nullable = false, unique = true, length = 50)
     private String email;
+
+    @Column(nullable = false, length = 100)
     private String password;
+
     private String token;
+
+    @Column(nullable = false)
     private boolean isActive;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

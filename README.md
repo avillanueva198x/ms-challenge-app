@@ -65,9 +65,9 @@ cd bci-user-registration
 
 ## Accesos útiles
 
-- **Endpoint de salud**: [http://localhost:8080/actuator/health](http://localhost:8080/actuator/health)
-- **Swagger UI**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- **Console H2**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **Endpoint de salud**: [http://localhost:9191/actuator/health](http://localhost:9191/actuator/health)
+- **Swagger UI**: [http://localhost:9191/swagger-ui.html](http://localhost:9191/swagger-ui.html)
+- **Console H2**: [http://localhost:9191/h2-console](http://localhost:9191/h2-console)
     - JDBC URL: `jdbc:h2:mem:testdb`
     - Usuario: `sa`
     - Contraseña: (vacío)

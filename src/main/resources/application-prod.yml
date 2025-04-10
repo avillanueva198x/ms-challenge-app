@@ -1,6 +1,4 @@
 spring:
-    profiles:
-        active: prod
     datasource:
         url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/${MYSQL_DB}
         username: ${MYSQL_USER}
@@ -8,7 +6,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: validate
+            ddl-auto: update
         show-sql: false
 
 jwt:
@@ -17,14 +15,15 @@ jwt:
 
 app:
     regex:
-        password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"
-        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número.
+        password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.
 
 logging:
     config: classpath:logback-spring.xml
     level:
         root: INFO
         org.hibernate.SQL: OFF
-        org.springframework.web: INFO
         org.springframework.boot.autoconfigure: WARN
+        org.springframework.web: INFO
         org.springframework.web.servlet.DispatcherServlet: OFF
+        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: INFO

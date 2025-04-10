@@ -6,23 +6,27 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
         hibernate:
-            ddl-auto: validate
+            ddl-auto: update
         show-sql: false
 
 jwt:
-    secret: qa-secret-key-placeholder
+    secret: nLkG3q9tv6qX5Yt1z0MjKfRMp7YkVpJ2X9LqOEj3W5k=
     expiration: 3600000
 
 app:
     regex:
-        password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"
-        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número.
+        password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"
+        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.
 
 logging:
     level:
         root: INFO
-        org.hibernate.SQL: WARN
-        org.springframework.web: INFO
-        org.springframework.boot.autoconfigure: WARN
+        org.springdoc: DEBUG
+        org.hibernate.SQL: ERROR
+        org.hibernate.type.descriptor.sql: TRACE
+        org.springframework.boot.autoconfigure: INFO
+        org.springframework.web: DEBUG
+        org.springframework.web.servlet.DispatcherServlet: DEBUG
+        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: INFO
     file:
         name: logs/qa-app.log

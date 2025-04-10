@@ -1,6 +1,7 @@
 package com.app.challenge.infrastructure.adapter.out.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Transient;
 import lombok.Getter;
@@ -27,7 +28,10 @@ public abstract class BaseModel {
     protected static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("###,###.00", DecimalFormatSymbols.getInstance(Locale.forLanguageTag("es_PE")));
 
     private LocalDateTime created;
+
     private LocalDateTime modified;
+
+    @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
 }

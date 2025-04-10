@@ -43,6 +43,17 @@
         </root>
     </springProfile>
 
+    <springProfile name="qa">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN_TRACING}</pattern>
+            </encoder>
+        </appender>
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
     <springProfile name="prod">
         <root level="INFO">
             <appender-ref ref="ASYNC_JSON"/>

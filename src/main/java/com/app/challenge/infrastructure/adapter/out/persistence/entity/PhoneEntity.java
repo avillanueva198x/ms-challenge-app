@@ -8,21 +8,28 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name = "phones")
+@Table(name = "user_phones")
 @Getter
 @Setter
 @NoArgsConstructor
 public class PhoneEntity {
 
+
     @Id
     @GeneratedValue
     private UUID id;
 
+    @Column(nullable = false, length = 15)
     private String number;
+
+    @Column(nullable = false, length = 10)
     private String citycode;
-    private String contrycode;
+
+    @Column(name = "country_code", nullable = false, length = 10)
+    private String countrycode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_user_phone"))
     private UserEntity user;
+
 }
