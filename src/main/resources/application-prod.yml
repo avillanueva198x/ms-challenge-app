@@ -26,4 +26,4 @@ logging:
         org.springframework.boot.autoconfigure: WARN
         org.springframework.web: INFO
         org.springframework.web.servlet.DispatcherServlet: OFF
-        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: INFO
+        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: OFF
