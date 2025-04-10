@@ -19,12 +19,10 @@ public class User {
 	private String email;
 	private String password;
 	private List<Phone> phones;
-
 	private LocalDateTime created;
 	private LocalDateTime modified;
 	private LocalDateTime lastLogin;
 	private String token;
 	private boolean isActive;
-
 
 }

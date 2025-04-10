@@ -8,7 +8,6 @@ import com.app.challenge.shared.exception.EmailAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -20,18 +19,14 @@ public class CreateUserService implements CreateUserUseCase {
 
 	@Override
 	public User createUser(User user) {
-		if (saveUserPort.existsByEmail(user.getEmail())) {
+		if (this.saveUserPort.existsByEmail(user.getEmail())) {
 			throw new EmailAlreadyExistsException("El correo ya registrado");
 		}
 
-		LocalDateTime now = LocalDateTime.now();
 		user.setId(UUID.randomUUID());
-		/*user.setCreated(now);
-		user.setModified(now);
-		user.setLastLogin(now);*/
-		user.setToken(jwtUtil.generateToken(user));
+		user.setToken(this.jwtUtil.generateToken(user));
 		user.setActive(true);
 
-		return saveUserPort.save(user);
+		return this.saveUserPort.save(user);
 	}
 }
