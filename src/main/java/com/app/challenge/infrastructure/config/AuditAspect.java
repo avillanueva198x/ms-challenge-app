@@ -15,24 +15,24 @@ import java.time.LocalDateTime;
 public class AuditAspect {
 
 
-	@Pointcut("execution(* com.app.challenge.infrastructure.adapter.out.persistence.repository..*.save(..))")
-	public void saveMethodPointcut() {
-		log.debug("Entrando al método saveMethodPointcut()");
-	}
+    @Pointcut("execution(* com.app.challenge.infrastructure.adapter.out.persistence.repository..*.save(..))")
+    public void saveMethodPointcut() {
+        log.debug("Entrando al método saveMethodPointcut()");
+    }
 
-	@Before("saveMethodPointcut() && args(entity)")
-	public void beforeSave(Object entity) {
-		log.debug("Antes de guardar la entidad: {}", entity.getClass().getSimpleName());
-		if (entity instanceof BaseModel baseModel) {
-			log.debug("Aplicando auditoría a: {}", baseModel.getClass().getSimpleName());
+    @Before("saveMethodPointcut() && args(entity)")
+    public void beforeSave(Object entity) {
+        log.debug("Antes de guardar la entidad: {}", entity.getClass().getSimpleName());
+        if (entity instanceof BaseModel baseModel) {
+            log.debug("Aplicando auditoría a: {}", baseModel.getClass().getSimpleName());
 
-			LocalDateTime now = LocalDateTime.now();
-			baseModel.setCreated(now);
-			baseModel.setModified(now);
-			baseModel.setLastLogin(now);
+            LocalDateTime now = LocalDateTime.now();
+            baseModel.setCreated(now);
+            baseModel.setModified(now);
+            baseModel.setLastLogin(now);
 
-		} else {
-			log.warn("La entidad no es una instancia de BaseModel: {}", entity.getClass().getSimpleName());
-		}
-	}
+        } else {
+            log.warn("La entidad no es una instancia de BaseModel: {}", entity.getClass().getSimpleName());
+        }
+    }
 }

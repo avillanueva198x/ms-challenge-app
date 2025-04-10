@@ -14,19 +14,19 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class CreateUserService implements CreateUserUseCase {
 
-	private final SaveUserPort saveUserPort;
-	private final JwtUtil jwtUtil;
+    private final SaveUserPort saveUserPort;
+    private final JwtUtil jwtUtil;
 
-	@Override
-	public User createUser(User user) {
-		if (this.saveUserPort.existsByEmail(user.getEmail())) {
-			throw new EmailAlreadyExistsException("El correo ya registrado");
-		}
+    @Override
+    public User createUser(User user) {
+        if (this.saveUserPort.existsByEmail(user.getEmail())) {
+            throw new EmailAlreadyExistsException("El correo ya registrado");
+        }
 
-		user.setId(UUID.randomUUID());
-		user.setToken(this.jwtUtil.generateToken(user));
-		user.setActive(true);
+        user.setId(UUID.randomUUID());
+        user.setToken(this.jwtUtil.generateToken(user));
+        user.setActive(true);
 
-		return this.saveUserPort.save(user);
-	}
+        return this.saveUserPort.save(user);
+    }
 }

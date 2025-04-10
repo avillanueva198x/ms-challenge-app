@@ -9,14 +9,15 @@ import java.util.UUID;
 
 @Schema(description = "Respuesta del usuario creado")
 public record UserResponse(
-		UUID id,
-		LocalDateTime created,
-		LocalDateTime modified,
-		@JsonProperty("last_login")
-		LocalDateTime lastLogin,
-		String token,
-		boolean isActive,
-		String name,
-		String email,
-		List<PhoneRequest> phones
-) {}
+    UUID id,
+    LocalDateTime created,
+    LocalDateTime modified,
+    @JsonProperty("last_login")
+    LocalDateTime lastLogin,
+    String token,
+    boolean isActive,
+    String name,
+    String email,
+    List<PhoneRequest> phones
+) {
+}

@@ -10,15 +10,16 @@ import java.util.List;
 
 @Schema(description = "Request para crear un nuevo usuario")
 public record CreateUserRequest(
-		@NotBlank(message = "El nombre es obligatorio")
-		@Schema(example = "Juan Rodriguez")
-		String name,
-		@Email(message = "Formato de correo inválido")
-		@Schema(example = "juan@rodriguez.org")
-		String email,
-		@ValidPassword
-		@Schema(example = "Hunter2")
-		String password,
-		@Valid
-		List<PhoneRequest> phones
-) {}
+    @NotBlank(message = "El nombre es obligatorio")
+    @Schema(example = "Juan Rodriguez")
+    String name,
+    @Email(message = "Formato de correo inválido")
+    @Schema(example = "juan@rodriguez.org")
+    String email,
+    @ValidPassword
+    @Schema(example = "Hunter2")
+    String password,
+    @Valid
+    List<PhoneRequest> phones
+) {
+}

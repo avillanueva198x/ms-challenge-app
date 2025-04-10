@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserPersistenceAdapter implements SaveUserPort {
 
-	private final UserRepository userRepository;
-	private final UserEntityMapper mapper;
+    private final UserRepository userRepository;
+    private final UserEntityMapper mapper;
 
-	@Override
-	@Transactional
-	public User save(User user) {
-		var entity = mapper.toEntity(user);
-		var saved = userRepository.save(entity);
-		return mapper.toDomain(saved);
-	}
+    @Override
+    @Transactional
+    public User save(User user) {
+        var entity = mapper.toEntity(user);
+        var saved = userRepository.save(entity);
+        return mapper.toDomain(saved);
+    }
 
-	@Override
-	public boolean existsByEmail(String email) {
-		return userRepository.findByEmail(email).isPresent();
-	}
+    @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
 }

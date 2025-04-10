@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,17 +13,17 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserEntity extends BaseModel{
+public class UserEntity extends BaseModel {
 
-	@Id
-	private UUID id;
+    @Id
+    private UUID id;
 
-	private String name;
-	private String email;
-	private String password;
-	private String token;
-	private boolean isActive;
+    private String name;
+    private String email;
+    private String password;
+    private String token;
+    private boolean isActive;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<PhoneEntity> phones;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PhoneEntity> phones;
 }

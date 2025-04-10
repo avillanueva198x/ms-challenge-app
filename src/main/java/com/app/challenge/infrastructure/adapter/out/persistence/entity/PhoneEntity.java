@@ -14,15 +14,15 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PhoneEntity {
 
-	@Id
-	@GeneratedValue
-	private UUID id;
+    @Id
+    @GeneratedValue
+    private UUID id;
 
-	private String number;
-	private String citycode;
-	private String contrycode;
+    private String number;
+    private String citycode;
+    private String contrycode;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private UserEntity user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
 }

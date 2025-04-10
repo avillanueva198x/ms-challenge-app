@@ -1,6 +1,8 @@
 # POC - Registro de Usuarios (Reto Técnico)
 
-API RESTful desarrollada en Java 17 con Spring Boot 3, orientada al registro de usuarios. Implementa arquitectura hexagonal (Domain-Driven Design), principios SOLID, Clean Code, y buenas prácticas de seguridad, escalabilidad y mantenibilidad.
+API RESTful desarrollada en Java 17 con Spring Boot 3, orientada al registro de usuarios. Implementa arquitectura
+hexagonal (Domain-Driven Design), principios SOLID, Clean Code, y buenas prácticas de seguridad, escalabilidad y
+mantenibilidad.
 
 ## Tabla de contenidos
 
@@ -12,7 +14,6 @@ API RESTful desarrollada en Java 17 con Spring Boot 3, orientada al registro de 
 6. [Validaciones](#validaciones)
 7. [Pruebas](#pruebas)
 8. [Principios y patrones aplicados](#principios-y-patrones-aplicados)
-
 
 ## Tecnologías utilizadas
 
@@ -30,7 +31,8 @@ API RESTful desarrollada en Java 17 con Spring Boot 3, orientada al registro de 
 
 ## Arquitectura del Proyecto
 
-La solución está estructurada bajo el enfoque Hexagonal / Ports & Adapters, cumpliendo principios de DDD (Domain-Driven Design):
+La solución está estructurada bajo el enfoque Hexagonal / Ports & Adapters, cumpliendo principios de DDD (Domain-Driven
+Design):
 
 ```bash
 ┌────────────────────┐
@@ -73,6 +75,7 @@ cd bci-user-registration
 ## Endpoint principal
 
 - `Request (POST /api/v1/users)`:
+
 ```bash
 {
 	"name": "Juan Rodriguez",
@@ -115,6 +118,7 @@ cd bci-user-registration
   "mensaje": "El correo ya registrado"
 }
 ```
+
 - Todos los errores siguen este formato:
 
 ```bash
@@ -124,7 +128,6 @@ cd bci-user-registration
 ```
 
 - Los tokens JWT son firmados en memoria (no expiran realmente ya que no hay autenticación implementada aún).
-
 
 ## Pruebas
 
@@ -139,6 +142,7 @@ cd bci-user-registration
 ```bash
 ./mvnw test
 ```
+
 - Incluye pruebas de:
 
 Casos de uso (CreateUserUseCase)
@@ -163,7 +167,6 @@ Controlador REST (UserController con MockMvc)
 - Inversión de dependencias con **@Component / @Service**
 - Validación con **Jakarta Bean Validation**
 - Pruebas unitarias con **TDD** (Test Driven Development)
-
 
 ### Cobertura de pruebas
 
