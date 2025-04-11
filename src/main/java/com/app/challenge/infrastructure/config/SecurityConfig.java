@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -37,10 +36,9 @@ public class SecurityConfig {
                 )
                 .httpBasic(Customizer.withDefaults())
                 .build();
-        } catch (Exception e) {
+        } catch (Throwable e) {
             log.error("Error configurando seguridad ", e);
             throw new ChallengeHandleException("Error configurando seguridad", e);
         }
     }
-
 }
