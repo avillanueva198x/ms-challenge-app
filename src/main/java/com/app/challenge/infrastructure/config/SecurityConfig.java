@@ -36,7 +36,7 @@ public class SecurityConfig {
                 )
                 .httpBasic(Customizer.withDefaults())
                 .build();
-        } catch (Throwable e) {
+        } catch (Exception e) {
             log.error("Error configurando seguridad ", e);
             throw new ChallengeHandleException("Error configurando seguridad", e);
         }
