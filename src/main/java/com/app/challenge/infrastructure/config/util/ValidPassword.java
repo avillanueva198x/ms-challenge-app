@@ -1,6 +1,5 @@
 package com.app.challenge.infrastructure.config.util;
 
-import com.app.challenge.infrastructure.config.util.PasswordValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

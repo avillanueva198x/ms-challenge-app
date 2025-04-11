@@ -3,6 +3,7 @@ package com.app.challenge.infrastructure.adapter.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Transient;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,4 +35,8 @@ public abstract class BaseModel {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
+    @PreUpdate
+    protected void onUpdate() {
+        this.modified = LocalDateTime.now();
+    }
 }

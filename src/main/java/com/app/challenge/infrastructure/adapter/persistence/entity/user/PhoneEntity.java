@@ -1,5 +1,6 @@
 package com.app.challenge.infrastructure.adapter.persistence.entity.user;
 
+import com.app.challenge.infrastructure.adapter.persistence.entity.BaseModel;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,12 +9,11 @@ import lombok.Setter;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_phones")
+@Table(name = "t_user_phones")
 @Getter
 @Setter
 @NoArgsConstructor
-public class PhoneEntity {
-
+public class PhoneEntity extends BaseModel {
 
     @Id
     @GeneratedValue

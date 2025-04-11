@@ -20,14 +20,22 @@ mantenibilidad.
 - **Java 17**
 - **Spring Boot 3.2**
 - **Gradle**
-- **Spring Data JPA + H2 Database (en memoria)**
-- **JWT (JSON Web Token)**
-- **Spring Security con JWT (mínima implementación para generación de tokens)**
-- **MapStruct (opcional, actualmente se usan mappers manuales)**
+- **Spring Data JPA (usando Hibernate como implementación) + H2 Database (en memoria)**
+- **JWT (JSON Web Token)** para autenticación
+- **Spring Security con JWT** (mínima implementación para generación de tokens)
+- **MapStruct** (opcional, actualmente se usan mappers manuales)
 - **Lombok**
-- **Swagger / OpenAPI 3**
-- **JUnit 5 + Mockito**
-- **Spring Boot Actuator (Observabilidad)**
+- **Swagger / OpenAPI 3** para documentación de la API
+- **JUnit 5 + Mockito** para pruebas unitarias
+- **Spring Boot Actuator** para **observabilidad** y monitoreo
+- **Logback** para configuración de logging
+- **MDC (Mapped Diagnostic Context)** para identificar correlación de logs entre peticiones
+- **AOP (Aspect-Oriented Programming)** para auditoría con la anotación `@Aspect`
+- **Checkstyle** y **PMD** para análisis estático de código y aseguramiento de calidad
+- **SonarQube** para integración continua y análisis de calidad de código
+- **Logstash y ELK** (ElasticSearch, Logstash, Kibana) para almacenamiento y visualización de logs
+- **Repositorio en GitHub**
+
 
 ## Arquitectura del Proyecto
 
@@ -53,7 +61,7 @@ Design):
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/bci-user-registration.git
+git clone https://github.com/avillanueva198x/ms-challenge-app.git.git
 cd bci-user-registration
 ```
 
