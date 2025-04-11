@@ -14,14 +14,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserHandlerTest {
@@ -76,9 +75,9 @@ class CreateUserHandlerTest {
     @DisplayName("Debe mapear correctamente y crear el usuario")
     void shouldMapAndCreateUserSuccessfully() {
         // Arrange
-        when(this.mapper.toDomain(this.request)).thenReturn(this.domainUser);
-        when(this.service.createUser(this.domainUser)).thenReturn(this.domainUser);
-        when(this.mapper.toResponse(this.domainUser)).thenReturn(this.expectedResponse);
+        Mockito.when(this.mapper.toDomain(this.request)).thenReturn(this.domainUser);
+        Mockito.when(this.service.createUser(this.domainUser)).thenReturn(this.domainUser);
+        Mockito.when(this.mapper.toResponse(this.domainUser)).thenReturn(this.expectedResponse);
 
         // Act
         UserResponse response = handler.handle(request);
@@ -87,8 +86,8 @@ class CreateUserHandlerTest {
         Assertions.assertEquals(this.expectedResponse.email(), response.email());
         Assertions.assertEquals(this.expectedResponse.name(), response.name());
         Assertions.assertEquals(this.expectedResponse.token(), response.token());
-        verify(this.mapper).toDomain(this.request);
-        verify(this.service).createUser(this.domainUser);
-        verify(this.mapper).toResponse(this.domainUser);
+        Mockito.verify(this.mapper).toDomain(this.request);
+        Mockito.verify(this.service).createUser(this.domainUser);
+        Mockito.verify(this.mapper).toResponse(this.domainUser);
     }
 }

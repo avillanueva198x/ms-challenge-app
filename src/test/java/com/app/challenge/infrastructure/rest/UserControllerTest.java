@@ -10,6 +10,7 @@ import com.app.challenge.infrastructure.rest.advice.EmailAlreadyExistsException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -59,7 +59,7 @@ class UserControllerTest {
             true
         );
 
-        when(this.createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(this.createUserHandler.handle(any(CreateUserRequest.class)))
             .thenReturn(expectedResponse);
 
         // Act + Assert
@@ -103,7 +103,7 @@ class UserControllerTest {
     void shouldReturnConflictIfEmailExists() throws Exception {
         var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
 
-        when(createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(createUserHandler.handle(any(CreateUserRequest.class)))
             .thenThrow(new EmailAlreadyExistsException("El correo ya registrado"));
 
         mockMvc.perform(post("/api/v1/users")
@@ -118,7 +118,7 @@ class UserControllerTest {
     void shouldReturnInternalServerErrorOnUnhandledException() throws Exception {
         var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
 
-        when(createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(createUserHandler.handle(any(CreateUserRequest.class)))
             .thenThrow(new RuntimeException("Fallo inesperado"));
 
         mockMvc.perform(post("/api/v1/users")
