@@ -39,7 +39,8 @@ public class SecurityConfig {
                 .build();
         } catch (Exception e) {
             log.error("Error configurando seguridad ", e);
-            throw new ChallengeHandleException("Error configurando seguridad");
+            throw new ChallengeHandleException("Error configurando seguridad", e);
         }
     }
+
 }
