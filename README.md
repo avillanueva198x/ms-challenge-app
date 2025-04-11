@@ -35,7 +35,6 @@ mantenibilidad.
 - **Logstash y ELK** (ElasticSearch, Logstash, Kibana) para almacenamiento y visualización de logs
 - **Repositorio en GitHub**
 
-
 ## Instalación y ejecución
 
 1. Clonar el repositorio:
@@ -119,12 +118,12 @@ cd ms-challenge-app
 
 ## Verificación de calidad y pruebas
 
-  `Cobertura de pruebas`
+`Cobertura de pruebas`
+
 - Controlador REST (`UserControllerTest`)
 - Handler (`CreateUserHandlerTest`)
 - Casos de uso (`CreateUserUseCaseTest`)
 - Adaptador de persistencia (`UserPersistenceAdapterTest`)
-
 
 
 - Para verificar que todo el proyecto cumple con estándares de calidad y tiene pruebas completas, **puedes ejecutar**:
@@ -156,19 +155,42 @@ Pruebas unitarias: build/reports/tests/test/index.html
 
 - **NOTA:** Puedes usar Postman o Swagger para probar. Incluye también el archivo .postman_collection.json si gustas.
 
-
 ## Principios y patrones aplicados
 
-- Arquitectura **Hexagonal / Clean Architecture**
-- Principios **SOLID**
-- **Clean Code** (responsabilidades únicas, nombres claros, clases pequeñas)
-- DTOs para desacoplar capa REST y dominio
-- Bean Validation (@Valid, @NotBlank, @Email, etc.)
-- JWT como token de autenticación (aún no se usa en endpoints protegidos)
-- Centralización de errores con **@RestControllerAdvice**
-- Observabilidad con **Spring Boot Actuator**
-- Posibilidad de extender seguridad con **Spring Security**
-- Mappers manuales (reemplazables por MapStruct si se desea mayor mantenibilidad)
-- Inversión de dependencias con **@Component / @Service**
-- Validación con **Jakarta Bean Validation**
-- Pruebas unitarias con **TDD** (Test Driven Development)
+Esta solución fue diseñada aplicando los **principios de arquitectura SETO** (Seguridad, Escalabilidad, Trazabilidad y
+Observabilidad), integrando además buenas prácticas modernas de desarrollo en Java 17 con Spring Boot 3.2, arquitectura
+limpia y enfoque DDD.
+
+- **Arquitectura Hexagonal / Clean Architecture**: separación clara entre dominio, casos de uso, infraestructura y
+  adaptadores.
+- **Principios SOLID** aplicados a clases, controladores, servicios y adaptadores.
+- **Clean Code**: clases pequeñas, responsabilidades únicas, nomenclatura clara y consistente.
+- **DTOs** para desacoplar la capa REST del modelo de dominio.
+- **Bean Validation (Jakarta)** con anotaciones como `@Valid`, `@NotBlank`, `@Email` y validaciones personalizadas.
+- **JWT como token de autenticación** (generado al registrar usuario; no hay endpoints protegidos todavía).
+- **Manejo centralizado de errores** con `@RestControllerAdvice` y mensajes estructurados en
+  JSON (`{"mensaje": "error"}`).
+- **Observabilidad avanzada**:
+    - `Spring Boot Actuator` habilitado (`/actuator/health`, `/metrics`, etc.).
+    - Uso de **MDC (Mapped Diagnostic Context)** para incluir `X-Correlation-Id` en cada request y log.
+    - Configuración de **Logback estructurado** para logs JSON (`logback-spring.xml` compatible con ELK/Logstash).
+- **Auditoría con AOP (Aspect-Oriented Programming)**: aplicación transversal de logging o trazabilidad mediante
+  aspectos (`@Aspect`).
+- **Seguridad desacoplada y extensible** con configuración de `SecurityFilterChain` para pruebas y
+  perfiles (`@TestConfiguration`).
+- **Inyección de dependencias limpia** usando `@Component`, `@Service`, `@Configuration`.
+- **Mappers manuales** (con posibilidad de reemplazo por MapStruct).
+- **Pruebas unitarias y TDD** cubriendo:
+    - Controlador REST (`UserControllerTest`)
+    - Casos de uso (`CreateUserUseCaseTest`)
+    - Adaptador de persistencia (`UserPersistenceAdapterTest`)
+- **Patrones para escalabilidad y mantenibilidad**:
+    - `Ports & Adapters`: permite cambiar implementación (ej. de H2 a PostgreSQL) sin afectar dominio.
+    - `Domain-Driven Design`: desacopla lógica de negocio real del transporte y persistencia.
+    - `Handlers` como punto de entrada para orquestar validaciones y lógica.
+- **Análisis de calidad ejecutado exitosamente**:
+    - `Checkstyle`: aprobado
+    - `PMD`: sin errores ni warnings
+    - `JaCoCo`: cobertura generada correctamente
+    - Todos los tests pasan (`./gradlew check`) sin fallos ni advertencias
+
