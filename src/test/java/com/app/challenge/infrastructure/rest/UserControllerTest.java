@@ -31,11 +31,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import({TestSecurityConfig.class, PasswordRegexProperties.class})
 class UserControllerTest {
 
+    private static final String USER_NAME = "Juan";
+    private static final String EMAIL = "juan@mail.com";
+    private static final String CONTRASENA = "HunterApp2";
+    private static final String PHONE_NUMBER = "12334567";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
     private ObjectMapper objectMapper;
-
     @MockBean
     private CreateUserHandler createUserHandler;
 
@@ -43,13 +46,13 @@ class UserControllerTest {
     @DisplayName("Debería crear un usuario exitosamente")
     void shouldCreateUserSuccessfully() throws Exception {
         // Arrange
-        var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2",
-            List.of(new PhoneRequest("1234567", "1", "57")));
+        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA,
+            List.of(new PhoneRequest(PHONE_NUMBER, "1", "57")));
 
         var expectedResponse = new UserResponse(
             UUID.randomUUID(),
-            "Juan",
-            "juan@mail.com",
+            USER_NAME,
+            EMAIL,
             "jwt-token-sample",
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -67,8 +70,8 @@ class UserControllerTest {
                 .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isCreated())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.email").value("juan@mail.com"))
-            .andExpect(jsonPath("$.name").value("Juan"))
+            .andExpect(jsonPath("$.email").value(EMAIL))
+            .andExpect(jsonPath("$.name").value(USER_NAME))
             .andExpect(jsonPath("$.token").value("jwt-token-sample"))
             .andExpect(jsonPath("$.isActive").value(true));
     }
@@ -76,7 +79,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si el email es inválido")
     void shouldReturnBadRequestWhenEmailIsInvalid() throws Exception {
-        var request = new CreateUserRequest("Juan", "correo-malo", "HunterApp2", List.of());
+        var request = new CreateUserRequest(USER_NAME, "correo-malo", CONTRASENA, List.of());
 
         this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -88,7 +91,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si la contraseña no cumple con la expresión regular")
     void shouldReturnBadRequestWhenPasswordIsWeak() throws Exception {
-        var request = new CreateUserRequest("Juan", "juan@mail.com", "1234", List.of());
+        var request = new CreateUserRequest(USER_NAME, EMAIL, "1234", List.of());
 
         this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -100,7 +103,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si el correo ya está registrado")
     void shouldReturnConflictIfEmailExists() throws Exception {
-        var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
+        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, List.of());
 
         Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenThrow(new EmailAlreadyExistsException("El correo ya registrado"));
@@ -115,7 +118,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error 500 si ocurre una excepción no controlada")
     void shouldReturnInternalServerErrorOnUnhandledException() throws Exception {
-        var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
+        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, List.of());
 
         Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenThrow(new RuntimeException("Fallo inesperado"));
