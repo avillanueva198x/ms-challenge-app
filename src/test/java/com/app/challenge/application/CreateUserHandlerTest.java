@@ -40,7 +40,7 @@ class CreateUserHandlerTest {
 
     @BeforeEach
     void setup() {
-        request = new CreateUserRequest(
+        this.request = new CreateUserRequest(
             "Juan", "juan@mail.com", "HunterApp2",
             List.of(new PhoneRequest("1234567", "1", "57"))
         );
@@ -80,7 +80,7 @@ class CreateUserHandlerTest {
         Mockito.when(this.mapper.toResponse(this.domainUser)).thenReturn(this.expectedResponse);
 
         // Act
-        UserResponse response = handler.handle(request);
+        UserResponse response = this.handler.handle(this.request);
 
         // Assert
         Assertions.assertEquals(this.expectedResponse.email(), response.email());

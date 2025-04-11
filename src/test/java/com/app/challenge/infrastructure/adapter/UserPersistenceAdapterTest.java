@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @Import({UserPersistenceAdapter.class, UserEntityMapper.class}) // Sin MapStruct, es manual
@@ -49,10 +48,10 @@ class UserPersistenceAdapterTest {
         var savedUser = this.adapter.save(user);
 
         // Assert
-        assertNotNull(savedUser.getId());
+        Assertions.assertNotNull(savedUser.getId());
         Assertions.assertEquals("juan@mail.com", savedUser.getEmail());
         Assertions.assertEquals(1, savedUser.getPhones().size());
-        assertTrue(this.repository.findByEmail("juan@mail.com").isPresent());
+        Assertions.assertTrue(this.repository.findByEmail("juan@mail.com").isPresent());
     }
 
     @Test
@@ -77,13 +76,13 @@ class UserPersistenceAdapterTest {
         boolean exists = this.adapter.existsByEmail("maria@mail.com");
 
         // Assert
-        assertTrue(exists);
+        Assertions.assertTrue(exists);
     }
 
     @Test
     @DisplayName("Debe retornar falso si el email no existe")
     void shouldReturnFalseIfEmailDoesNotExist() {
         boolean exists = this.adapter.existsByEmail("noexiste@mail.com");
-        assertFalse(exists);
+        Assertions.assertFalse(exists);
     }
 }

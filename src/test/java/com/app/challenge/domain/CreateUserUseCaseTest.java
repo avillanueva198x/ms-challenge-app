@@ -18,10 +18,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
-
 @ExtendWith(MockitoExtension.class)
 class CreateUserUseCaseTest {
 
@@ -57,18 +53,18 @@ class CreateUserUseCaseTest {
     void shouldCreateUserSuccessfully() {
         // Arrange
         Mockito.when(this.saveUserPort.existsByEmail(this.inputUser.getEmail())).thenReturn(false);
-        Mockito.when(this.jwtUtil.generateToken(any(User.class))).thenReturn("jwt-token-fake");
-        Mockito.when(this.saveUserPort.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        Mockito.when(this.jwtUtil.generateToken(Mockito.any(User.class))).thenReturn("jwt-token-fake");
+        Mockito.when(this.saveUserPort.save(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
         User createdUser = this.useCase.createUser(this.inputUser);
 
         // Assert
-        assertNotNull(createdUser.getId());
+        Assertions.assertNotNull(createdUser.getId());
         Assertions.assertEquals("jwt-token-fake", createdUser.getToken());
-        assertTrue(createdUser.isActive());
+        Assertions.assertTrue(createdUser.isActive());
         Mockito.verify(this.saveUserPort).existsByEmail(this.inputUser.getEmail());
-        Mockito.verify(this.saveUserPort).save(any(User.class));
+        Mockito.verify(this.saveUserPort).save(Mockito.any(User.class));
     }
 
     @Test
@@ -78,13 +74,13 @@ class CreateUserUseCaseTest {
         Mockito.when(this.saveUserPort.existsByEmail(this.inputUser.getEmail())).thenReturn(true);
 
         // Act + Assert
-        var exception = assertThrows(EmailAlreadyExistsException.class, () -> {
+        var exception = Assertions.assertThrows(EmailAlreadyExistsException.class, () -> {
             this.useCase.createUser(this.inputUser);
         });
 
         Assertions.assertEquals("El correo ya registrado", exception.getMessage());
         Mockito.verify(this.saveUserPort).existsByEmail(this.inputUser.getEmail());
-        Mockito.verify(this.saveUserPort, never()).save(any());
-        Mockito.verify(this.jwtUtil, never()).generateToken(any());
+        Mockito.verify(this.saveUserPort, Mockito.never()).save(Mockito.any());
+        Mockito.verify(this.jwtUtil, Mockito.never()).generateToken(Mockito.any());
     }
 }

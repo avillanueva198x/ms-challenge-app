@@ -23,7 +23,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -59,7 +58,7 @@ class UserControllerTest {
             true
         );
 
-        Mockito.when(this.createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenReturn(expectedResponse);
 
         // Act + Assert
@@ -79,7 +78,7 @@ class UserControllerTest {
     void shouldReturnBadRequestWhenEmailIsInvalid() throws Exception {
         var request = new CreateUserRequest("Juan", "correo-malo", "HunterApp2", List.of());
 
-        mockMvc.perform(post("/api/v1/users")
+        this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
@@ -91,7 +90,7 @@ class UserControllerTest {
     void shouldReturnBadRequestWhenPasswordIsWeak() throws Exception {
         var request = new CreateUserRequest("Juan", "juan@mail.com", "1234", List.of());
 
-        mockMvc.perform(post("/api/v1/users")
+        this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
@@ -103,10 +102,10 @@ class UserControllerTest {
     void shouldReturnConflictIfEmailExists() throws Exception {
         var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
 
-        Mockito.when(createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenThrow(new EmailAlreadyExistsException("El correo ya registrado"));
 
-        mockMvc.perform(post("/api/v1/users")
+        this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isConflict())
@@ -118,10 +117,10 @@ class UserControllerTest {
     void shouldReturnInternalServerErrorOnUnhandledException() throws Exception {
         var request = new CreateUserRequest("Juan", "juan@mail.com", "HunterApp2", List.of());
 
-        Mockito.when(createUserHandler.handle(any(CreateUserRequest.class)))
+        Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenThrow(new RuntimeException("Fallo inesperado"));
 
-        mockMvc.perform(post("/api/v1/users")
+        this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isInternalServerError())
