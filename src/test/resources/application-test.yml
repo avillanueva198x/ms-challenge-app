@@ -19,7 +19,7 @@ jwt:
 app:
     regex:
         password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"
-        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número.
+        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número
 
 logging:
     level:
