@@ -155,7 +155,7 @@ Controlador REST (UserController con MockMvc)
 ## Principios y patrones aplicados
 
 - Arquitectura **Hexagonal / Clean Architecture**
-- Principios  **SOLID**
+- Principios **SOLID**
 - **Clean Code** (responsabilidades únicas, nombres claros, clases pequeñas)
 - DTOs para desacoplar capa REST y dominio
 - Bean Validation (@Valid, @NotBlank, @Email, etc.)
@@ -174,3 +174,19 @@ Controlador REST (UserController con MockMvc)
 - Adaptador de persistencia (`UserPersistenceAdapter`)
 - Utilitario de JWT
 - Controlador REST (`UserController` con MockMvc)
+
+### Análisis de calidad
+
+- Cómo ejecutar los **análisis de calidad**:
+
+```bash
+./gradlew check
+```
+
+- Cómo **ver los reportes**:
+
+```bash
+PMD: build/reports/pmd/main.html
+Checkstyle: build/reports/checkstyle/main.html
+Pruebas unitarias: build/reports/tests/test/index.html
+```

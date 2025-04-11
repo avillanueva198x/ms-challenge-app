@@ -18,4 +18,4 @@ public record PhoneRequest(
     @Size(min = 1, max = 10, message = "El código de país debe tener entre 1 y 10 dígitos")
     @Schema(example = "5557")
     String contrycode
-) {}
+) { }
