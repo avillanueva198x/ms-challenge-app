@@ -1,0 +1,35 @@
+spring:
+    datasource:
+        url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE
+        driver-class-name: org.h2.Driver
+        username: sa
+        password:
+    h2:
+        console:
+            enabled: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+
+jwt:
+    secret: nLkG3q9tv6qX5Yt1z0MjKfRMp7YkVpJ2X9LqOEj3W5k=
+    expiration: 3600000
+
+app:
+    regex:
+        password: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$"
+        message: La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número.
+
+logging:
+    level:
+        root: INFO
+        org.springdoc: DEBUG
+        org.hibernate.SQL: ERROR
+        org.hibernate.type.descriptor.sql: TRACE
+        org.springframework.boot.autoconfigure: INFO
+        org.springframework.web: DEBUG
+        org.springframework.web.servlet.DispatcherServlet: DEBUG
+        org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLogger: INFO
+    file:
+        name: logs/dev-app.log
