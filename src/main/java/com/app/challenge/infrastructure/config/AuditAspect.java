@@ -1,6 +1,6 @@
 package com.app.challenge.infrastructure.config;
 
-import com.app.challenge.infrastructure.adapter.out.persistence.entity.BaseModel;
+import com.app.challenge.infrastructure.adapter.persistence.entity.BaseModel;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

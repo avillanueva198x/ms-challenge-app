@@ -1,6 +1,6 @@
 package com.app.challenge.infrastructure.config;
 
-import com.app.challenge.shared.exception.ChallengeHandleException;
+import com.app.challenge.infrastructure.rest.advice.ChallengeHandleException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
