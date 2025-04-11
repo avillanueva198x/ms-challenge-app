@@ -76,19 +76,19 @@ class CreateUserHandlerTest {
     @DisplayName("Debe mapear correctamente y crear el usuario")
     void shouldMapAndCreateUserSuccessfully() {
         // Arrange
-        when( this.mapper.toDomain( this.request)).thenReturn( this.domainUser);
-        when( this.service.createUser( this.domainUser)).thenReturn( this.domainUser);
-        when( this.mapper.toResponse( this.domainUser)).thenReturn( this.expectedResponse);
+        when(this.mapper.toDomain(this.request)).thenReturn(this.domainUser);
+        when(this.service.createUser(this.domainUser)).thenReturn(this.domainUser);
+        when(this.mapper.toResponse(this.domainUser)).thenReturn(this.expectedResponse);
 
         // Act
         UserResponse response = handler.handle(request);
 
         // Assert
-        Assertions.assertEquals( this.expectedResponse.email(), response.email());
-        Assertions.assertEquals( this.expectedResponse.name(), response.name());
-        Assertions.assertEquals( this.expectedResponse.token(), response.token());
-        verify(this.mapper).toDomain( this.request);
-        verify(this.service).createUser( this.domainUser);
-        verify(this.mapper).toResponse( this.domainUser);
+        Assertions.assertEquals(this.expectedResponse.email(), response.email());
+        Assertions.assertEquals(this.expectedResponse.name(), response.name());
+        Assertions.assertEquals(this.expectedResponse.token(), response.token());
+        verify(this.mapper).toDomain(this.request);
+        verify(this.service).createUser(this.domainUser);
+        verify(this.mapper).toResponse(this.domainUser);
     }
 }
