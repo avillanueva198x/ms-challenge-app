@@ -1,0 +1,40 @@
+{
+	"info": {
+		"_postman_id": "94dae81f-cf82-4bea-a149-26d5b2c77608",
+		"name": "User API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "792440"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Adolfo Villanueva Paravicino\",\r\n  \"email\": \"avillanueva198x@gmail.com\",\r\n  \"password\": \"Prueba123$\",\r\n  \"phones\": [\r\n    {\r\n      \"number\": \"+51931871964\",\r\n      \"citycode\": \"01\",\r\n      \"contrycode\": \"51\"\r\n    },\r\n    {\r\n      \"number\": \"51935571999\",\r\n      \"citycode\": \"02\",\r\n      \"contrycode\": \"51\"\r\n    }\r\n  ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9191/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9191",
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
