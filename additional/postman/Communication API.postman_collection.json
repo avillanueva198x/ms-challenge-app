@@ -1,0 +1,150 @@
+{
+  "info": {
+    "_postman_id": "6ab4e1e7-1017-45cf-b2d3-ac385b4022e6",
+    "name": "Communication API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "792440"
+  },
+  "item": [
+    {
+      "name": "https://dkc.mimp.gob.pe/realms/mimp/protocol/openid-connect/token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "username",
+              "value": "ccvox_user",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "Qwerty123.Qwerty123.",
+              "type": "text"
+            },
+            {
+              "key": "client_id",
+              "value": "CCVOX",
+              "type": "text"
+            },
+            {
+              "key": "grant_type",
+              "value": "password",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "https://dkc.mimp.gob.pe/realms/mimp/protocol/openid-connect/token",
+          "protocol": "https",
+          "host": [
+            "dkc",
+            "mimp",
+            "gob",
+            "pe"
+          ],
+          "path": [
+            "realms",
+            "mimp",
+            "protocol",
+            "openid-connect",
+            "token"
+          ]
+        },
+        "description": "Generated from cURL: curl --location 'https://dkc.mimp.gob.pe/realms/mimp/protocol/openid-connect/token' \\\n--header 'Content-Type: application/x-www-form-urlencoded' \\\n--data-urlencode 'username=director_car' \\\n--data-urlencode 'password=123456' \\\n--data-urlencode 'client_id=CAR' \\\n--data-urlencode 'grant_type=password'"
+      },
+      "response": []
+    },
+    {
+      "name": "Handle Communication Result",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2d29LNGNvWFlQMVhuREJ2cy13UlJCdDdDRUFwRjZnUE5EeDU1YlFaUWVRIn0.eyJleHAiOjE3MzUyNjQ5MDQsImlhdCI6MTczNTI2MTMwNCwianRpIjoiOTA0MmIyMmMtZjM3NC00NzJmLWFiMWYtNjdhMDEwOTkxYTNkIiwiaXNzIjoiaHR0cHM6Ly9ka2MubWltcC5nb2IucGUvcmVhbG1zL21pbXAiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiMmJmYzBmMzMtM2FjZi00YTFiLWIwZjYtYzdhYWZlZTRkODBmIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiQ0NWT1giLCJzZXNzaW9uX3N0YXRlIjoiYjE4YmNkMmEtMjdhZS00MzJjLThmNDAtY2UzZGRhNWQ5MGQzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIqIl0sInJlYWxtX2FjY2VzcyI6eyJyb2xlcyI6WyJkZWZhdWx0LXJvbGVzLW1pbXAiLCJvZmZsaW5lX2FjY2VzcyIsInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiQ0NWT1giOnsicm9sZXMiOlsiQ0NWT1gtdXNlciJdfSwiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJwcm9maWxlIGVtYWlsIiwic2lkIjoiYjE4YmNkMmEtMjdhZS00MzJjLThmNDAtY2UzZGRhNWQ5MGQzIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiY2N2b3ggdXNlciIsInByZWZlcnJlZF91c2VybmFtZSI6ImNjdm94X3VzZXIiLCJnaXZlbl9uYW1lIjoiY2N2b3giLCJmYW1pbHlfbmFtZSI6InVzZXIiLCJlbWFpbCI6ImNjdm94X3VzZXJAbWltcC5nb2IucGUifQ.auR-W87LAvsA2fDjgetchS0gOUzelQFCjw0l6g-N4VpcbYZ42TpXmhR2p0o7Ip66cN3MGoolJcXYyn6RfBLE1G8LbhuYrrHLlPvN_MHQPVh05_qOQpMdI37zV7g7FGDWH0pxpdDlAjyI85GDie7sn98xD9JElWrND_Od-rbzTfdFIL0q_YvP9cOl942D5_19pJFk37wFkNjU7x9k8Yam5vM0hV55200H4o8lhEy4D1RFI3N64e1mT2roDUHX2Ha3qeKTT6AkkhhOKnB8jIxvRGHj6K-XXM7abNYWCGtLe9JwzzFrQelMh2xRMXdK2WPlJvEUbkpkYOX7u08Tl_sZoA",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"evento\": \"RESULTADO_COMUNICACION\",\n\t\"campanaId\": 1,\n\t\"campanaNombre\": \"Test Campaign\",\n\t\"colaId\": 1,\n\t\"colaNombre\": \"Test Queue\",\n\t\"loteId\": 123,\n\t\"loteNombre\": \"Test Batch\",\n\t\"resultadoMarcador\": \"Success\",\n\t\"servicioId\": 1,\n\t\"servicioNombre\": \"Test Service\",\n\t\"tipo\": \"Outbound\",\n\t\"tiempoAtencion\": \"00:05:00\",\n\t\"fechaInicioAtencion\": \"2024-12-23 14:00:00\",\n\t\"idContactoExternal\": \"EXTERNAL_ID\",\n\t\"callid\": \"CALL12345\",\n\t\"numero\": \"1234567890\",\n\t\"agenteNombre\": \"Agent Test\",\n\t\"agenteLogin\": \"agent_login\",\n\t\"gestiones\": [{\"gestion\": \"Test\"}],\n\t\"whatsappId\": 999\n}"
+        },
+        "url": {
+          "raw": "http://localhost:9091/mcs-receptor-ccvox/api/communication/result",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9091",
+          "path": [
+            "mcs-receptor-ccvox",
+            "api",
+            "communication",
+            "result"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Handle Conversation Start",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI2d29LNGNvWFlQMVhuREJ2cy13UlJCdDdDRUFwRjZnUE5EeDU1YlFaUWVRIn0.eyJleHAiOjE3MzUyNTQ5OTAsImlhdCI6MTczNTI1MTM5MCwianRpIjoiOGZhYjUwOTMtZTVhOS00ZGM2LWEyZTAtZDE2Mjc3Nzk2MjY0IiwiaXNzIjoiaHR0cHM6Ly9ka2MubWltcC5nb2IucGUvcmVhbG1zL21pbXAiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZWYyZjE2MzEtNTQ2MS00NzZjLThjNDctNTFjOTBkMTU5N2M2IiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiQ0FSIiwic2Vzc2lvbl9zdGF0ZSI6ImE4NmJjZGNjLTg0NGYtNDJmNC05ZjI1LTYwZGY4Y2NmZGIwMyIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1taW1wIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7IkNBUiI6eyJyb2xlcyI6WyJDQVItZGlyZWN0b3IiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImE4NmJjZGNjLTg0NGYtNDJmNC05ZjI1LTYwZGY4Y2NmZGIwMyIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6ImRpcmVjdG9yIGNhciIsIm5pZF9DYXIiOjI0LCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJkaXJlY3Rvcl9jYXIiLCJnaXZlbl9uYW1lIjoiZGlyZWN0b3IiLCJmYW1pbHlfbmFtZSI6ImNhciJ9.eo0BTA-D8Fsgz1XC-NJRG4YkSPELE2Ce-uXYuSObxVY736HeNJYf4nnndr1Ca6xHLIQ_8jaXjzTVMmqQ3hlmkrMBYcBf6OPHeB2wTk7HNQX8aip_u_2E8rap1mNSw4Kkti1COerLHaK0j8hJq6kvue0iVOcyOZwN9hRj3rcIK4lkoia7bbgG_wXlsC57462-HAKYNZl8gee2W7HUJv-vXJ-QZ7cGFizbANuRD_Fr5kSGt1ZhHpXnrFKvG_aqTEuLN1KuYRAT3WbVyj1WDEOgPpYoEHLnR1AiOdat-uAOmZZAJZ07q2TMyvtO2yRG-VgGrz0IYdQiFoHMkCFeU8DWhg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"evento\": \"INICIO_CONVERSACION\",\n\t\"campanaId\": 1,\n\t\"campanaNombre\": \"Test Campaign\",\n\t\"colaId\": 1,\n\t\"servicioId\": 2,\n\t\"colaNombre\": \"Test Queue asdasdad asdas dasd\",\n\t\"loteId\": 123,\n\t\"loteNombre\": \"Test Batch\",\n\t\"callid\": \"CALL12345\",\n\t\"tipo\": \"Inbound\",\n\t\"fechaInicioAtencion\": \"2024-12-23 14:00:00\",\n\t\"numero\": \"1234567890\",\n\t\"agenteNombre\": \"Agent Test\",\n\t\"agenteLogin\": \"agent_login\",\n\t\"idContactoExternal\": \"EXTERNAL_ID\",\n\t\"datoAdicional1\": \"Additional Data 1\",\n\t\"datoAdicional2\": \"Additional Data 2\",\n\t\"datoAdicional3\": \"Additional Data 3\",\n\t\"datoAdicional4\": \"Additional Data 4\",\n\t\"datoAdicional5\": \"Additional Data 5\",\n\t\"datoAdicional6\": \"Additional Data 6\",\n\t\"datoAdicional7\": \"Additional Data 7\",\n\t\"datoAdicional8\": \"Additional Data 8\",\n\t\"datoAdicional9\": \"Additional Data 9\",\n\t\"datoAdicional10\": \"Additional Data 10\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:9091/mcs-receptor-ccvox/api/communication/start",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "9091",
+          "path": [
+            "mcs-receptor-ccvox",
+            "api",
+            "communication",
+            "start"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
