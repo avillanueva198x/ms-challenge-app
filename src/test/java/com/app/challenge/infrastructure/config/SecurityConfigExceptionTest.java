@@ -1,11 +1,10 @@
 package com.app.challenge.infrastructure.config;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
-import static org.mockito.Mockito.*;
 
 class SecurityConfigExceptionTest {
 
@@ -13,17 +12,17 @@ class SecurityConfigExceptionTest {
     void shouldThrowChallengeHandleExceptionWhenHttpSecurityFails() {
         SecurityConfig config = new SecurityConfig();
 
-        HttpSecurity httpSecurity = mock(HttpSecurity.class);
+        HttpSecurity httpSecurity = Mockito.mock(HttpSecurity.class);
 
         try {
             // Forzamos un fallo en el primer método encadenado
-            when(httpSecurity.csrf(any())).thenThrow(new RuntimeException("Boom"));
+            Mockito.when(httpSecurity.csrf(Mockito.any())).thenThrow(new RuntimeException("Boom"));
 
             config.securityFilterChain(httpSecurity);
-            fail("Se esperaba ChallengeHandleException pero no fue lanzada");
+            Assertions.fail("Se esperaba ChallengeHandleException pero no fue lanzada");
 
         } catch (Exception ex) {
-            assertTrue(ex.getMessage().contains("Error configurando seguridad"));
+            Assertions.assertTrue(ex.getMessage().contains("Error configurando seguridad"));
         }
     }
 }
