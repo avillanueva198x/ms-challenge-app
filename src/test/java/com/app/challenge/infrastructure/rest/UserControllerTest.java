@@ -1,7 +1,7 @@
 package com.app.challenge.infrastructure.rest;
 
 import com.app.challenge.application.handler.CreateUserHandler;
-import com.app.challenge.config.TestSecurityConfig;
+import com.app.challenge.config.SecurityTestConfig;
 import com.app.challenge.domain.model.dto.request.CreateUserRequest;
 import com.app.challenge.domain.model.dto.request.PhoneRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ActiveProfiles("test")
 @WebMvcTest(UserController.class)
-@Import({TestSecurityConfig.class, PasswordRegexProperties.class})
+@Import({SecurityTestConfig.class, PasswordRegexProperties.class})
 class UserControllerTest {
 
     private static final String USER_NAME = "Juan";

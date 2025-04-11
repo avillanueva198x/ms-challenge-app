@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 
 @TestConfiguration
-public class TestSecurityConfig {
+public class SecurityTestConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {

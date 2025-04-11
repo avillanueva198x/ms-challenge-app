@@ -7,12 +7,11 @@ mantenibilidad.
 ## Tabla de contenidos
 
 1. [Tecnologías utilizadas](#tecnologías-utilizadas)
-2. [Estructura del proyecto](#estructura-del-proyecto)
 3. [Instalación y ejecución](#instalación-y-ejecución)
 4. [Accesos útiles](#accesos-útiles)
 5. [Endpoint principal](#endpoint-principal)
-6. [Validaciones](#validaciones)
-7. [Pruebas](#pruebas)
+6. [Validaciones del API](#Validaciones-del-API)
+7. [Verificación de calidad y pruebas](#Verificación-de-calidad-y-pruebas)
 8. [Principios y patrones aplicados](#principios-y-patrones-aplicados)
 
 ## Tecnologías utilizadas
@@ -36,24 +35,6 @@ mantenibilidad.
 - **Logstash y ELK** (ElasticSearch, Logstash, Kibana) para almacenamiento y visualización de logs
 - **Repositorio en GitHub**
 
-## Arquitectura del Proyecto
-
-La solución está estructurada bajo el enfoque Hexagonal / Ports & Adapters, cumpliendo principios de DDD (Domain-Driven
-Design):
-
-```bash
-┌────────────────────┐
-│     Controller     │ ← REST API (input)
-├────────────────────┤
-│     Handler        │ ← Adaptador Input
-├────────────────────┤
-│ Application Layer  │ ← Casos de uso
-├────────────────────┤
-│     Domain         │ ← Entidades / lógica de negocio
-├────────────────────┤
-│ Persistence Layer  │ ← Adaptador Output (JPA / H2)
-└────────────────────┘
-```
 
 ## Instalación y ejecución
 
@@ -61,13 +42,13 @@ Design):
 
 ```bash
 git clone https://github.com/avillanueva198x/ms-challenge-app.git.git
-cd bci-user-registration
+cd ms-challenge-app
 ```
 
-2. Ejecuta con Gradle:
+2. Levanta la aplicación con Gradle utilizando el perfil deseado (por defecto se sugiere dev):
 
 ```bash
-./gradlew bootRun
+./gradlew bootRun -Dspring.profiles.active=dev --offline
 ```
 
 ## Accesos útiles
@@ -114,7 +95,7 @@ cd bci-user-registration
 }
 ```
 
-## Validaciones y errores
+## Validaciones del API
 
 - Email debe tener formato válido (@Email)
 - Password validado con expresión regular configurable vía application.yml
@@ -136,28 +117,45 @@ cd bci-user-registration
 
 - Los tokens JWT son firmados en memoria (no expiran realmente ya que no hay autenticación implementada aún).
 
-## Pruebas
+## Verificación de calidad y pruebas
 
-- Para correr las pruebas unitarias:
+  `Cobertura de pruebas`
+- Controlador REST (`UserControllerTest`)
+- Handler (`CreateUserHandlerTest`)
+- Casos de uso (`CreateUserUseCaseTest`)
+- Adaptador de persistencia (`UserPersistenceAdapterTest`)
+
+
+
+- Para verificar que todo el proyecto cumple con estándares de calidad y tiene pruebas completas, **puedes ejecutar**:
 
 ```bash
-./gradlew test
+./gradlew check
 ```
 
-- O si usas Maven local:
+- Si cuentas con SONAR, **puedes ejecutar** este comando (Recuerda actualizar tus datos del sonar en el build.gradle):
 
 ```bash
-./mvnw test
+./gradlew check -Penv=local
 ```
 
-- Incluye pruebas de:
+o Solo
 
-Casos de uso (CreateUserUseCase)
-Adaptador de persistencia (UserPersistenceAdapter)
-Generador JWT (JwtUtil)
-Controlador REST (UserController con MockMvc)
+```bash
+./gradlew sonar -Penv=local
+```
 
-- Puedes usar Postman o Swagger para probar. Incluye también el archivo .postman_collection.json si gustas.
+- Cómo **ver los reportes**:
+
+```bash
+PMD: build/reports/pmd/main.html
+Checkstyle: build/reports/checkstyle/main.html
+Cobertura JaCoCo:  build/reports/jacoco/test/html/index.html
+Pruebas unitarias: build/reports/tests/test/index.html
+```
+
+- **NOTA:** Puedes usar Postman o Swagger para probar. Incluye también el archivo .postman_collection.json si gustas.
+
 
 ## Principios y patrones aplicados
 
@@ -174,26 +172,3 @@ Controlador REST (UserController con MockMvc)
 - Inversión de dependencias con **@Component / @Service**
 - Validación con **Jakarta Bean Validation**
 - Pruebas unitarias con **TDD** (Test Driven Development)
-
-### Cobertura de pruebas
-
-- Casos de uso (`CreateUserUseCase`)
-- Adaptador de persistencia (`UserPersistenceAdapter`)
-- Utilitario de JWT
-- Controlador REST (`UserController` con MockMvc)
-
-### Análisis de calidad
-
-- Cómo ejecutar los **análisis de calidad**:
-
-```bash
-./gradlew check
-```
-
-- Cómo **ver los reportes**:
-
-```bash
-PMD: build/reports/pmd/main.html
-Checkstyle: build/reports/checkstyle/main.html
-Pruebas unitarias: build/reports/tests/test/index.html
-```
