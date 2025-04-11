@@ -14,7 +14,7 @@ spec:
         spec:
             containers:
                 -   name: ms-challenge-app
-                    image: tuusuario/ms-challenge-app:latest
+                    image: avillanueva198x/ms-challenge-app:latest
                     ports:
                         -   containerPort: 9191
                     env:

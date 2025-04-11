@@ -16,9 +16,7 @@ public class SecurityTestConfig {
         try {
             return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth
-                    .anyRequest().permitAll()
-                )
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .build();
         } catch (Exception e) {
             Assertions.fail("Error configurando seguridad ", e);
