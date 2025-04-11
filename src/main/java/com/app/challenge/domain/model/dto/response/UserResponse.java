@@ -16,7 +16,7 @@ public record UserResponse(
     LocalDateTime created,
     LocalDateTime modified,
     LocalDateTime lastLogin,
-    boolean isActive,
-    List<PhoneRequest> phones
+    List<PhoneRequest> phones,
+    boolean isActive
 ) {
 }

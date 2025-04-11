@@ -16,7 +16,7 @@ spec:
                 -   name: ms-challenge-app
                     image: tuusuario/ms-challenge-app:latest
                     ports:
-                        -   containerPort: 8080
+                        -   containerPort: 9191
                     env:
                         -   name: SPRING_PROFILES_ACTIVE
                             valueFrom:

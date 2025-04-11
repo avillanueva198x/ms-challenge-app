@@ -39,8 +39,8 @@ public class UserMapper {
             user.getCreated(),
             user.getModified(),
             user.getLastLogin(),
-            user.isActive(),
-            phones
+            phones,
+            user.isActive()
         );
     }
 }
