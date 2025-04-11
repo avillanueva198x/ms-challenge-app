@@ -52,11 +52,11 @@
         <exclude name="TooManyMethods"/>
         <exclude name="UseObjectForClearerAPI"/>
         <exclude name="CouplingBetweenObjects"/>
+        <exclude name="LoosePackageCoupling"/>
     </rule>
     <rule ref="category/java/errorprone.xml">
         <exclude name="AvoidFieldNameMatchingMethodName"/>
         <exclude name="AvoidFieldNameMatchingTypeName"/>
-        <exclude name="BeanMembersShouldSerialize"/>
         <exclude name="ConstructorCallsOverridableMethod"/>
         <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="MissingSerialVersionUID"/>
