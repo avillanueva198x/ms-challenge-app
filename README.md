@@ -193,4 +193,7 @@ limpia y enfoque DDD.
     - `PMD`: sin errores ni warnings
     - `JaCoCo`: cobertura generada correctamente
     - Todos los tests pasan (`./gradlew check`) sin fallos ni advertencias
+- **Análisis con Sonarqube**:
+    - Cobertura del código **al 100%**.
+
 
