@@ -36,7 +36,6 @@ mantenibilidad.
 - **Logstash y ELK** (ElasticSearch, Logstash, Kibana) para almacenamiento y visualización de logs
 - **Repositorio en GitHub**
 
-
 ## Arquitectura del Proyecto
 
 La solución está estructurada bajo el enfoque Hexagonal / Ports & Adapters, cumpliendo principios de DDD (Domain-Driven

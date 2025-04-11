@@ -1,8 +1,8 @@
 package com.app.challenge.infrastructure.rest;
 
+import com.app.challenge.application.handler.CreateUserHandler;
 import com.app.challenge.domain.model.dto.request.CreateUserRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
-import com.app.challenge.application.handler.CreateUserHandler;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

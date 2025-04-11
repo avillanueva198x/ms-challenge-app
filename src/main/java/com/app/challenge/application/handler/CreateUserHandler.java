@@ -1,9 +1,9 @@
 package com.app.challenge.application.handler;
 
+import com.app.challenge.application.mapper.UserMapper;
 import com.app.challenge.application.service.CreateUserService;
 import com.app.challenge.domain.model.dto.request.CreateUserRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
-import com.app.challenge.application.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,8 +1,8 @@
 package com.app.challenge.domain.usecase;
 
 import com.app.challenge.application.service.CreateUserService;
-import com.app.challenge.domain.port.SaveUserPort;
 import com.app.challenge.domain.model.dto.User;
+import com.app.challenge.domain.port.SaveUserPort;
 import com.app.challenge.infrastructure.config.util.JwtUtil;
 import com.app.challenge.infrastructure.rest.advice.EmailAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
