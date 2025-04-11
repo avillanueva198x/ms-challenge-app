@@ -7,6 +7,8 @@ import com.app.challenge.domain.model.dto.User;
 import com.app.challenge.domain.model.dto.request.CreateUserRequest;
 import com.app.challenge.domain.model.dto.request.PhoneRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,8 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserHandlerTest {
@@ -33,20 +34,23 @@ class CreateUserHandlerTest {
     @InjectMocks
     private CreateUserHandler handler;
 
+    private CreateUserRequest request;
+    private User domainUser;
+    private UserResponse expectedResponse;
 
-    @Test
-    void shouldMapAndCreateUser() {
-        // Arrange
-        var request = new CreateUserRequest("Juan", "juan@mail.com", "Hunter2", List.of(
-            new PhoneRequest("1234567", "1", "57")
-        ));
+    @BeforeEach
+    void setup() {
+        request = new CreateUserRequest(
+            "Juan", "juan@mail.com", "HunterApp2",
+            List.of(new PhoneRequest("1234567", "1", "57"))
+        );
 
-        var mockUser = new User(
+        domainUser = new User(
             UUID.randomUUID(),
-            "Juan",
-            "juan@mail.com",
-            "Hunter2",
-            List.of(),
+            request.name(),
+            request.email(),
+            request.password(),
+            List.of(), // Podrías mapear Phone si quieres ir más detallado
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -54,14 +58,36 @@ class CreateUserHandlerTest {
             true
         );
 
-        when(service.createUser(any(User.class))).thenReturn(mockUser);
+        expectedResponse = new UserResponse(
+            domainUser.getId(),
+            domainUser.getName(),
+            domainUser.getEmail(),
+            domainUser.getToken(),
+            domainUser.getCreated(),
+            domainUser.getModified(),
+            domainUser.getLastLogin(),
+            request.phones(),
+            domainUser.isActive()
+        );
+    }
+
+    @Test
+    @DisplayName("Debe mapear correctamente y crear el usuario")
+    void shouldMapAndCreateUserSuccessfully() {
+        // Arrange
+        when(mapper.toDomain(request)).thenReturn(domainUser);
+        when(service.createUser(domainUser)).thenReturn(domainUser);
+        when(mapper.toResponse(domainUser)).thenReturn(expectedResponse);
 
         // Act
         UserResponse response = handler.handle(request);
 
         // Assert
-        assertEquals("juan@mail.com", response.email());
-        assertEquals("Juan", response.name());
-        assertEquals(true, response.isActive());
+        assertEquals(expectedResponse.email(), response.email());
+        assertEquals(expectedResponse.name(), response.name());
+        assertEquals(expectedResponse.token(), response.token());
+        verify(mapper).toDomain(request);
+        verify(service).createUser(domainUser);
+        verify(mapper).toResponse(domainUser);
     }
 }
