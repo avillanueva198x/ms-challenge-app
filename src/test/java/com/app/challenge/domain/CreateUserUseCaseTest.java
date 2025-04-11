@@ -5,6 +5,7 @@ import com.app.challenge.domain.port.SaveUserPort;
 import com.app.challenge.domain.usecase.CreateUserUseCase;
 import com.app.challenge.infrastructure.config.util.JwtUtil;
 import com.app.challenge.infrastructure.rest.advice.EmailAlreadyExistsException;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class CreateUserUseCaseTest {
 
     @BeforeEach
     void setUp() {
-        inputUser = new User(
+        this.inputUser = new User(
             null,
             "Juan",
             "juan@mail.com",
@@ -53,35 +54,35 @@ class CreateUserUseCaseTest {
     @DisplayName("Debe crear usuario correctamente cuando no existe el correo")
     void shouldCreateUserSuccessfully() {
         // Arrange
-        when(saveUserPort.existsByEmail(inputUser.getEmail())).thenReturn(false);
-        when(jwtUtil.generateToken(any(User.class))).thenReturn("jwt-token-fake");
-        when(saveUserPort.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(this.saveUserPort.existsByEmail(this.inputUser.getEmail())).thenReturn(false);
+        when(this.jwtUtil.generateToken(any(User.class))).thenReturn("jwt-token-fake");
+        when(this.saveUserPort.save(any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
         // Act
-        User createdUser = useCase.createUser(inputUser);
+        User createdUser = this.useCase.createUser(this.inputUser);
 
         // Assert
         assertNotNull(createdUser.getId());
-        assertEquals("jwt-token-fake", createdUser.getToken());
+        Assertions.assertEquals("jwt-token-fake", createdUser.getToken());
         assertTrue(createdUser.isActive());
-        verify(saveUserPort).existsByEmail(inputUser.getEmail());
-        verify(saveUserPort).save(any(User.class));
+        verify(this.saveUserPort).existsByEmail(this.inputUser.getEmail());
+        verify(this.saveUserPort).save(any(User.class));
     }
 
     @Test
     @DisplayName("Debe lanzar excepción si el correo ya está registrado")
     void shouldThrowExceptionIfEmailExists() {
         // Arrange
-        when(saveUserPort.existsByEmail(inputUser.getEmail())).thenReturn(true);
+        when(this.saveUserPort.existsByEmail(this.inputUser.getEmail())).thenReturn(true);
 
         // Act + Assert
         var exception = assertThrows(EmailAlreadyExistsException.class, () -> {
-            useCase.createUser(inputUser);
+            this.useCase.createUser(this.inputUser);
         });
 
-        assertEquals("El correo ya registrado", exception.getMessage());
-        verify(saveUserPort).existsByEmail(inputUser.getEmail());
-        verify(saveUserPort, never()).save(any());
-        verify(jwtUtil, never()).generateToken(any());
+        Assertions.assertEquals("El correo ya registrado", exception.getMessage());
+        verify(this.saveUserPort).existsByEmail(this.inputUser.getEmail());
+        verify(this.saveUserPort, never()).save(any());
+        verify(this.jwtUtil, never()).generateToken(any());
     }
 }

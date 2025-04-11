@@ -5,6 +5,7 @@ import com.app.challenge.domain.model.dto.Phone;
 import com.app.challenge.domain.model.dto.User;
 import com.app.challenge.infrastructure.adapter.persistence.UserPersistenceAdapter;
 import com.app.challenge.infrastructure.adapter.persistence.repository.UserRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +46,13 @@ class UserPersistenceAdapterTest {
         );
 
         // Act
-        var savedUser = adapter.save(user);
+        var savedUser = this.adapter.save(user);
 
         // Assert
         assertNotNull(savedUser.getId());
-        assertEquals("juan@mail.com", savedUser.getEmail());
-        assertEquals(1, savedUser.getPhones().size());
-        assertTrue(repository.findByEmail("juan@mail.com").isPresent());
+        Assertions.assertEquals("juan@mail.com", savedUser.getEmail());
+        Assertions.assertEquals(1, savedUser.getPhones().size());
+        assertTrue(this.repository.findByEmail("juan@mail.com").isPresent());
     }
 
     @Test
@@ -70,10 +71,10 @@ class UserPersistenceAdapterTest {
             "jwt-token-maria",
             true
         );
-        adapter.save(user);
+        this.adapter.save(user);
 
         // Act
-        boolean exists = adapter.existsByEmail("maria@mail.com");
+        boolean exists = this.adapter.existsByEmail("maria@mail.com");
 
         // Assert
         assertTrue(exists);
@@ -82,7 +83,7 @@ class UserPersistenceAdapterTest {
     @Test
     @DisplayName("Debe retornar falso si el email no existe")
     void shouldReturnFalseIfEmailDoesNotExist() {
-        boolean exists = adapter.existsByEmail("noexiste@mail.com");
+        boolean exists = this.adapter.existsByEmail("noexiste@mail.com");
         assertFalse(exists);
     }
 }

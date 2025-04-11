@@ -59,13 +59,13 @@ class UserControllerTest {
             true
         );
 
-        when(createUserHandler.handle(any(CreateUserRequest.class)))
+        when(this.createUserHandler.handle(any(CreateUserRequest.class)))
             .thenReturn(expectedResponse);
 
         // Act + Assert
-        mockMvc.perform(post("/api/v1/users")
+        this.mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isCreated())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.email").value("juan@mail.com"))
@@ -81,7 +81,7 @@ class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.mensaje").exists());
     }
@@ -93,7 +93,7 @@ class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.mensaje").value("La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número"));
     }
@@ -108,7 +108,7 @@ class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isConflict())
             .andExpect(jsonPath("$.mensaje").value("El correo ya registrado"));
     }
@@ -123,7 +123,7 @@ class UserControllerTest {
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(request)))
+                .content(this.objectMapper.writeValueAsString(request)))
             .andExpect(status().isInternalServerError())
             .andExpect(jsonPath("$.mensaje").value("Error interno del servidor"));
     }

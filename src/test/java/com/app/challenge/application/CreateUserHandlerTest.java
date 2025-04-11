@@ -7,6 +7,7 @@ import com.app.challenge.domain.model.dto.User;
 import com.app.challenge.domain.model.dto.request.CreateUserRequest;
 import com.app.challenge.domain.model.dto.request.PhoneRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -46,11 +46,11 @@ class CreateUserHandlerTest {
             List.of(new PhoneRequest("1234567", "1", "57"))
         );
 
-        domainUser = new User(
+        this.domainUser = new User(
             UUID.randomUUID(),
-            request.name(),
-            request.email(),
-            request.password(),
+            this.request.name(),
+            this.request.email(),
+            this.request.password(),
             List.of(), // Podrías mapear Phone si quieres ir más detallado
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -59,16 +59,16 @@ class CreateUserHandlerTest {
             true
         );
 
-        expectedResponse = new UserResponse(
-            domainUser.getId(),
-            domainUser.getName(),
-            domainUser.getEmail(),
-            domainUser.getToken(),
-            domainUser.getCreated(),
-            domainUser.getModified(),
-            domainUser.getLastLogin(),
-            request.phones(),
-            domainUser.isActive()
+        this.expectedResponse = new UserResponse(
+            this.domainUser.getId(),
+            this.domainUser.getName(),
+            this.domainUser.getEmail(),
+            this.domainUser.getToken(),
+            this.domainUser.getCreated(),
+            this.domainUser.getModified(),
+            this.domainUser.getLastLogin(),
+            this.request.phones(),
+            this.domainUser.isActive()
         );
     }
 
@@ -76,19 +76,19 @@ class CreateUserHandlerTest {
     @DisplayName("Debe mapear correctamente y crear el usuario")
     void shouldMapAndCreateUserSuccessfully() {
         // Arrange
-        when(mapper.toDomain(request)).thenReturn(domainUser);
-        when(service.createUser(domainUser)).thenReturn(domainUser);
-        when(mapper.toResponse(domainUser)).thenReturn(expectedResponse);
+        when( this.mapper.toDomain( this.request)).thenReturn( this.domainUser);
+        when( this.service.createUser( this.domainUser)).thenReturn( this.domainUser);
+        when( this.mapper.toResponse( this.domainUser)).thenReturn( this.expectedResponse);
 
         // Act
         UserResponse response = handler.handle(request);
 
         // Assert
-        assertEquals(expectedResponse.email(), response.email());
-        assertEquals(expectedResponse.name(), response.name());
-        assertEquals(expectedResponse.token(), response.token());
-        verify(mapper).toDomain(request);
-        verify(service).createUser(domainUser);
-        verify(mapper).toResponse(domainUser);
+        Assertions.assertEquals( this.expectedResponse.email(), response.email());
+        Assertions.assertEquals( this.expectedResponse.name(), response.name());
+        Assertions.assertEquals( this.expectedResponse.token(), response.token());
+        verify(this.mapper).toDomain( this.request);
+        verify(this.service).createUser( this.domainUser);
+        verify(this.mapper).toResponse( this.domainUser);
     }
 }
