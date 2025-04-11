@@ -1,57 +1,62 @@
 <configuration scan="true">
-
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
 
-    <!-- Patrón legible para consola local (desarrollo) -->
-    <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] - [%X{X-Correlation-Id}] - %-5level %logger{36} - %msg%n"/>
-
-    <!-- Appender para consola legible -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>${LOG_PATTERN}</pattern>
-        </encoder>
-    </appender>
-
-    <!-- Appender para logs en formato JSON (observabilidad) -->
+    <!-- Appender JSON estructurado -->
     <appender name="JSON" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
             <providers>
-                <timestamp>
-                    <fieldName>timestamp</fieldName>
-                </timestamp>
-                <loggerName>
-                    <fieldName>logger</fieldName>
-                </loggerName>
+                <timestamp/>
+                <logLevel/>
+                <loggerName/>
+                <threadName/>
+                <mdc/>
                 <pattern>
                     <pattern>
                         {
-                        "level": "%level",
-                        "thread": "%thread",
                         "correlationId": "%X{X-Correlation-Id}",
+                        "traceId": "%X{trace.id}",
+                        "spanId": "%X{span.id}",
                         "message": "%message"
                         }
                     </pattern>
                 </pattern>
-                <stackTrace>
-                    <fieldName>stack_trace</fieldName>
-                </stackTrace>
+                <stackTrace/>
             </providers>
         </encoder>
     </appender>
 
-    <!-- Configuración para perfil "dev" -->
+    <appender name="ASYNC_JSON" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="JSON"/>
+    </appender>
+
+    <property name="CONSOLE_LOG_PATTERN_TRACING"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%X{X-Correlation-Id}]){yellow} %clr(${PID:- }){magenta} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} : %m%n%wEx"/>
+
     <springProfile name="dev">
-        <root level="INFO">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN_TRACING}</pattern>
+            </encoder>
+        </appender>
+        <root level="DEBUG">
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
-    <!-- Configuración para perfil "prod" -->
-    <springProfile name="prod">
-        <root level="INFO">
-            <appender-ref ref="JSON"/>
+    <springProfile name="qa">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <pattern>${CONSOLE_LOG_PATTERN_TRACING}</pattern>
+            </encoder>
+        </appender>
+        <root level="DEBUG">
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 
+    <springProfile name="prod">
+        <root level="INFO">
+            <appender-ref ref="ASYNC_JSON"/>
+        </root>
+    </springProfile>
 </configuration>

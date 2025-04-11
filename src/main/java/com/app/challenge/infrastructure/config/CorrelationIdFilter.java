@@ -14,27 +14,27 @@ import java.util.UUID;
 @Component
 public class CorrelationIdFilter implements Filter {
 
-	private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
+    private static final String CORRELATION_ID_HEADER = "X-Correlation-Id";
 
-	@Override
-	public void doFilter(jakarta.servlet.ServletRequest request, jakarta.servlet.ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+    @Override
+    public void doFilter(jakarta.servlet.ServletRequest request, jakarta.servlet.ServletResponse response, FilterChain chain)
+        throws IOException, ServletException {
 
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		String correlationId = httpRequest.getHeader(CORRELATION_ID_HEADER);
-		if (correlationId == null || correlationId.isBlank()) {
-			correlationId = UUID.randomUUID().toString();
-		}
+        String correlationId = httpRequest.getHeader(CORRELATION_ID_HEADER);
+        if (correlationId == null || correlationId.isBlank()) {
+            correlationId = UUID.randomUUID().toString();
+        }
 
-		MDC.put(CORRELATION_ID_HEADER, correlationId); // para logs
-		httpResponse.setHeader(CORRELATION_ID_HEADER, correlationId); // opcional, para devolver al cliente
+        MDC.put(CORRELATION_ID_HEADER, correlationId); // para logs
+        httpResponse.setHeader(CORRELATION_ID_HEADER, correlationId); // opcional, para devolver al cliente
 
-		try {
-			chain.doFilter(request, response);
-		} finally {
-			MDC.remove(CORRELATION_ID_HEADER); // evita memory leaks
-		}
-	}
+        try {
+            chain.doFilter(request, response);
+        } finally {
+            MDC.remove(CORRELATION_ID_HEADER); // evita memory leaks
+        }
+    }
 }

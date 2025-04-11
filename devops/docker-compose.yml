@@ -5,7 +5,7 @@ services:
         build: ..
         container_name: ms-challenge-app
         ports:
-            - "8080:8080"
+            - "9191:9191"
         environment:
             SPRING_PROFILES_ACTIVE: dev
             JWT_SECRET: dev-secret
