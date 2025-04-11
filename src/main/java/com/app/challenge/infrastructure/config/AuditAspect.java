@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class AuditAspect {
 
 
-    @Pointcut("execution(* com.app.challenge.infrastructure.adapter.out.persistence.repository..*.save(..))")
+    @Pointcut("execution(* com.app.challenge.infrastructure.adapter.persistence.repository..*.save(..))")
     public void saveMethodPointcut() {
         log.debug("Entrando al método saveMethodPointcut()");
     }

@@ -7,7 +7,6 @@ import com.app.challenge.domain.model.dto.request.PhoneRequest;
 import com.app.challenge.domain.model.dto.response.UserResponse;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -24,7 +23,6 @@ public class UserMapper {
             .password(request.password())
             .phones(phones)
             .isActive(true)
-            .created(LocalDateTime.now())
             .build();
     }
 
@@ -35,13 +33,13 @@ public class UserMapper {
 
         return new UserResponse(
             user.getId(),
+            user.getName(),
+            user.getEmail(),
+            user.getToken(),
             user.getCreated(),
             user.getModified(),
             user.getLastLogin(),
-            user.getToken(),
             user.isActive(),
-            user.getName(),
-            user.getEmail(),
             phones
         );
     }

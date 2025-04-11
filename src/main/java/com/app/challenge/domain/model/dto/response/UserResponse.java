@@ -1,7 +1,6 @@
 package com.app.challenge.domain.model.dto.response;
 
 import com.app.challenge.domain.model.dto.request.PhoneRequest;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
@@ -11,14 +10,13 @@ import java.util.UUID;
 @Schema(description = "Respuesta del usuario creado")
 public record UserResponse(
     UUID id,
-    LocalDateTime created,
-    LocalDateTime modified,
-    @JsonProperty("last_login")
-    LocalDateTime lastLogin,
-    String token,
-    boolean isActive,
     String name,
     String email,
+    String token,
+    LocalDateTime created,
+    LocalDateTime modified,
+    LocalDateTime lastLogin,
+    boolean isActive,
     List<PhoneRequest> phones
 ) {
 }
