@@ -13,31 +13,31 @@ spec:
                 app: ms-challenge-app
         spec:
             containers:
-                - name: ms-challenge-app
-                  image: tuusuario/ms-challenge-app:latest
-                  ports:
-                      - containerPort: 8080
-                  env:
-                      - name: SPRING_PROFILES_ACTIVE
-                        valueFrom:
-                            configMapKeyRef:
-                                name: ms-config
-                                key: spring_profile
-                      - name: JWT_SECRET
-                        valueFrom:
-                            secretKeyRef:
-                                name: ms-secret
-                                key: jwt_secret
-                      - name: MYSQL_HOST
-                        value: mysql-service
-                      - name: MYSQL_PORT
-                        value: "3306"
-                      - name: MYSQL_DB
-                        value: app_db
-                      - name: MYSQL_USER
-                        value: app_user
-                      - name: MYSQL_PASSWORD
-                        valueFrom:
-                            secretKeyRef:
-                                name: ms-secret
-                                key: mysql_password
+                -   name: ms-challenge-app
+                    image: tuusuario/ms-challenge-app:latest
+                    ports:
+                        -   containerPort: 9191
+                    env:
+                        -   name: SPRING_PROFILES_ACTIVE
+                            valueFrom:
+                                configMapKeyRef:
+                                    name: ms-config
+                                    key: spring_profile
+                        -   name: JWT_SECRET
+                            valueFrom:
+                                secretKeyRef:
+                                    name: ms-secret
+                                    key: jwt_secret
+                        -   name: MYSQL_HOST
+                            value: mysql-service
+                        -   name: MYSQL_PORT
+                            value: "3306"
+                        -   name: MYSQL_DB
+                            value: app_db
+                        -   name: MYSQL_USER
+                            value: app_user
+                        -   name: MYSQL_PASSWORD
+                            valueFrom:
+                                secretKeyRef:
+                                    name: ms-secret
+                                    key: mysql_password
