@@ -1,9 +1,10 @@
 package com.app.challenge.infrastructure.adapter;
 
 import com.app.challenge.application.mapper.UserEntityMapper;
+import com.app.challenge.domain.model.dto.Phone;
 import com.app.challenge.domain.model.dto.User;
-import com.app.challenge.domain.port.SaveUserPort;
 import com.app.challenge.infrastructure.adapter.persistence.UserPersistenceAdapter;
+import com.app.challenge.infrastructure.adapter.persistence.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,38 +15,74 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-@Import({UserPersistenceAdapter.class, UserEntityMapper.class})
+@Import({UserPersistenceAdapter.class, UserEntityMapper.class}) // Sin MapStruct, es manual
 class UserPersistenceAdapterTest {
 
     @Autowired
-    private SaveUserPort adapter;
+    private UserPersistenceAdapter adapter;
+
+    @Autowired
+    private UserRepository repository;
 
     @Test
-    @DisplayName("Debe guardar un usuario y verificar que existe por email")
-    void shouldSaveAndRetrieveUser() {
+    @DisplayName("Debe guardar y retornar correctamente un usuario")
+    void shouldSaveUserSuccessfully() {
         // Arrange
         var user = new User(
             UUID.randomUUID(),
-            "Juan Pérez",
-            "correo@mail.com",
-            "Password123",
-            List.of(),
+            "Juan",
+            "juan@mail.com",
+            "HunterApp2",
+            List.of(new Phone("1234567", "1", "57")),
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
-            "fake-jwt-token",
+            "jwt-token-fake",
             true
         );
 
         // Act
-        User saved = adapter.save(user);
+        var savedUser = adapter.save(user);
 
         // Assert
-        assertNotNull(saved.getId());
-        assertTrue(adapter.existsByEmail("correo@mail.com"));
+        assertNotNull(savedUser.getId());
+        assertEquals("juan@mail.com", savedUser.getEmail());
+        assertEquals(1, savedUser.getPhones().size());
+        assertTrue(repository.findByEmail("juan@mail.com").isPresent());
+    }
+
+    @Test
+    @DisplayName("Debe retornar verdadero si el email existe en la base de datos")
+    void shouldReturnTrueIfEmailExists() {
+        // Arrange: primero persistimos uno
+        var user = new User(
+            UUID.randomUUID(),
+            "Maria",
+            "maria@mail.com",
+            "HunterApp2",
+            List.of(),
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            "jwt-token-maria",
+            true
+        );
+        adapter.save(user);
+
+        // Act
+        boolean exists = adapter.existsByEmail("maria@mail.com");
+
+        // Assert
+        assertTrue(exists);
+    }
+
+    @Test
+    @DisplayName("Debe retornar falso si el email no existe")
+    void shouldReturnFalseIfEmailDoesNotExist() {
+        boolean exists = adapter.existsByEmail("noexiste@mail.com");
+        assertFalse(exists);
     }
 }
