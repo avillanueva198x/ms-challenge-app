@@ -13,15 +13,13 @@ import java.lang.management.MemoryMXBean;
 public class ChallengeApplication {
 
     public static void main(String[] args) {
-
         int mb = 1024 * 1024;
         MemoryMXBean memoryBean = ManagementFactory.getMemoryMXBean();
         long xmx = memoryBean.getHeapMemoryUsage().getMax() / mb;
         long xms = memoryBean.getHeapMemoryUsage().getInit() / mb;
-        log.info(String.format("Initial Memory (xms) : %s mb ", xms));
-        log.info(String.format("Max Memory (xmx) : %s mb", xmx));
+        log.info("Initial Memory (xms): {} MB", xms);
+        log.info("Max Memory (xmx): {} MB", xmx);
         SpringApplication.run(ChallengeApplication.class, args);
-
     }
 
 }
