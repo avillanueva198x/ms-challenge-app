@@ -3,6 +3,7 @@ package com.app.challenge.infrastructure.adapter.persistence;
 import com.app.challenge.application.mapper.UserEntityMapper;
 import com.app.challenge.domain.model.dto.User;
 import com.app.challenge.domain.port.SaveUserPort;
+import com.app.challenge.infrastructure.adapter.persistence.entity.user.UserEntity;
 import com.app.challenge.infrastructure.adapter.persistence.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,8 +21,8 @@ public class UserPersistenceAdapter implements SaveUserPort {
     @Override
     @Transactional
     public User save(User user) {
-        var entity = this.mapper.toEntity(user);
-        var saved = this.userRepository.save(entity);
+        UserEntity entity = this.mapper.toEntity(user);
+        UserEntity saved = this.userRepository.save(entity);
         return this.mapper.toDomain(saved);
     }
 

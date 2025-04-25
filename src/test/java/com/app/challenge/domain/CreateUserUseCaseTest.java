@@ -16,7 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserUseCaseTest {
@@ -39,7 +39,7 @@ class CreateUserUseCaseTest {
             "Juan",
             "juan@mail.com",
             "HunterApp2",
-            List.of(),
+            Arrays.asList(),
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -74,7 +74,7 @@ class CreateUserUseCaseTest {
         Mockito.when(this.saveUserPort.existsByEmail(this.inputUser.getEmail())).thenReturn(true);
 
         // Act + Assert
-        var exception = Assertions.assertThrows(EmailAlreadyExistsException.class, () -> {
+        EmailAlreadyExistsException exception = Assertions.assertThrows(EmailAlreadyExistsException.class, () -> {
             this.useCase.createUser(this.inputUser);
         });
 

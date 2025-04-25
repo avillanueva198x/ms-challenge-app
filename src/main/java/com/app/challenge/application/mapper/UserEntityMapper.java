@@ -7,6 +7,7 @@ import com.app.challenge.infrastructure.adapter.persistence.entity.user.UserEnti
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserEntityMapper {
@@ -30,7 +31,7 @@ public class UserEntityMapper {
             pe.setCountrycode(p.getCountryCode());
             pe.setUser(entity);
             return pe;
-        }).toList();
+        }).collect(Collectors.toList());
 
         entity.setPhones(phones);
         return entity;
@@ -39,7 +40,7 @@ public class UserEntityMapper {
     public User toDomain(UserEntity entity) {
         List<Phone> phones = entity.getPhones().stream()
             .map(p -> new Phone(p.getNumber(), p.getCitycode(), p.getCountrycode()))
-            .toList();
+            .collect(Collectors.toList());
 
         return new User(
             entity.getId(),

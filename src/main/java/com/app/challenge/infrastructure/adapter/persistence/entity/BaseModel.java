@@ -1,11 +1,12 @@
 package com.app.challenge.infrastructure.adapter.persistence.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
 @MappedSuperclass

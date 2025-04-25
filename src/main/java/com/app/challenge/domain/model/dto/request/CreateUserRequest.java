@@ -2,24 +2,34 @@ package com.app.challenge.domain.model.dto.request;
 
 import com.app.challenge.infrastructure.config.util.ValidPassword;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Schema(description = "Request para crear un nuevo usuario")
-public record CreateUserRequest(
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CreateUserRequest {
+
     @NotBlank(message = "El nombre es obligatorio")
     @Schema(example = "Juan Rodriguez")
-    String name,
+    private String name;
+
     @Email(message = "Formato de correo inválido")
     @Schema(example = "juan@rodriguez.org")
-    String email,
+    private String email;
+
     @ValidPassword
     @Schema(example = "Hunter2")
-    String password,
+    private String password;
+
     @Valid
-    List<PhoneRequest> phones
-) {
+    private List<PhoneRequest> phones;
+
 }

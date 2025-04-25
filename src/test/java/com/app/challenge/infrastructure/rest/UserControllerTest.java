@@ -21,7 +21,8 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -51,10 +52,10 @@ class UserControllerTest {
     @DisplayName("Debería crear un usuario exitosamente")
     void shouldCreateUserSuccessfully() {
         // Arrange
-        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA,
-            List.of(new PhoneRequest(PHONE_NUMBER, "1", "57")));
+        CreateUserRequest request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA,
+            Arrays.asList(new PhoneRequest(PHONE_NUMBER, "1", "57")));
 
-        var expectedResponse = new UserResponse(
+        UserResponse expectedResponse = new UserResponse(
             UUID.randomUUID(),
             USER_NAME,
             EMAIL,
@@ -62,7 +63,7 @@ class UserControllerTest {
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
-            request.phones(),
+            request.getPhones(),
             true
         );
 
@@ -86,7 +87,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si el email es inválido")
     void shouldReturnBadRequestWhenEmailIsInvalid() {
-        var request = new CreateUserRequest(USER_NAME, "correo-malo", CONTRASENA, List.of());
+        CreateUserRequest request = new CreateUserRequest(USER_NAME, "correo-malo", CONTRASENA, Collections.emptyList());
 
         Assertions.assertDoesNotThrow(() -> {
             this.mockMvc.perform(post(ENDPOINT)
@@ -100,7 +101,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si la contraseña no cumple con la expresión regular")
     void shouldReturnBadRequestWhenPasswordIsWeak() {
-        var request = new CreateUserRequest(USER_NAME, EMAIL, "1234", List.of());
+        CreateUserRequest request = new CreateUserRequest(USER_NAME, EMAIL, "1234", Collections.emptyList());
 
         try {
             this.mockMvc.perform(post(ENDPOINT)
@@ -117,7 +118,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error si el correo ya está registrado")
     void shouldReturnConflictIfEmailExists() {
-        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, List.of());
+        CreateUserRequest request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, Collections.emptyList());
 
         Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))
             .thenThrow(new EmailAlreadyExistsException("El correo ya registrado"));
@@ -137,7 +138,7 @@ class UserControllerTest {
     @Test
     @DisplayName("Debe retornar error 500 si ocurre una excepción no controlada")
     void shouldReturnInternalServerErrorOnUnhandledException() {
-        var request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, List.of());
+        CreateUserRequest request = new CreateUserRequest(USER_NAME, EMAIL, CONTRASENA, Collections.emptyList());
 
         // Configuramos el mock para que lance una excepción inesperada
         Mockito.when(this.createUserHandler.handle(Mockito.any(CreateUserRequest.class)))

@@ -8,28 +8,30 @@ import com.app.challenge.domain.model.dto.response.UserResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
 
     public User toDomain(CreateUserRequest request) {
-        List<Phone> phones = request.phones().stream()
-            .map(p -> new Phone(p.number(), p.citycode(), p.contrycode()))
-            .toList();
+        List<Phone> phones = request.getPhones().stream()
+            .map(p -> new Phone(p.getNumber(), p.getCitycode(), p.getContrycode()))
+            .collect(Collectors.toList());
 
         return User.builder()
-            .name(request.name())
-            .email(request.email())
-            .password(request.password())
+            .name(request.getName())
+            .email(request.getEmail())
+            .password(request.getPassword())
             .phones(phones)
             .isActive(true)
             .build();
     }
 
+
     public UserResponse toResponse(User user) {
         List<PhoneRequest> phones = user.getPhones().stream()
             .map(p -> new PhoneRequest(p.getNumber(), p.getCityCode(), p.getCountryCode()))
-            .toList();
+            .collect(Collectors.toList());
 
         return new UserResponse(
             user.getId(),

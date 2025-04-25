@@ -18,7 +18,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 
@@ -42,15 +43,15 @@ class CreateUserHandlerTest {
     void setup() {
         this.request = new CreateUserRequest(
             "Juan", "juan@mail.com", "HunterApp2",
-            List.of(new PhoneRequest("1234567", "1", "57"))
+            Arrays.asList(new PhoneRequest("1234567", "1", "57"))
         );
 
         this.domainUser = new User(
             UUID.randomUUID(),
-            this.request.name(),
-            this.request.email(),
-            this.request.password(),
-            List.of(), // Podrías mapear Phone si quieres ir más detallado
+            this.request.getName(),
+            this.request.getEmail(),
+            this.request.getPassword(),
+            Collections.emptyList(), // Podrías mapear Phone si quieres ir más detallado
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -66,7 +67,7 @@ class CreateUserHandlerTest {
             this.domainUser.getCreated(),
             this.domainUser.getModified(),
             this.domainUser.getLastLogin(),
-            this.request.phones(),
+            this.request.getPhones(),
             this.domainUser.isActive()
         );
     }
@@ -83,9 +84,9 @@ class CreateUserHandlerTest {
         UserResponse response = this.handler.handle(this.request);
 
         // Assert
-        Assertions.assertEquals(this.expectedResponse.email(), response.email());
-        Assertions.assertEquals(this.expectedResponse.name(), response.name());
-        Assertions.assertEquals(this.expectedResponse.token(), response.token());
+        Assertions.assertEquals(this.expectedResponse.getEmail(), response.getEmail());
+        Assertions.assertEquals(this.expectedResponse.getName(), response.getName());
+        Assertions.assertEquals(this.expectedResponse.getToken(), response.getToken());
         Mockito.verify(this.mapper).toDomain(this.request);
         Mockito.verify(this.service).createUser(this.domainUser);
         Mockito.verify(this.mapper).toResponse(this.domainUser);

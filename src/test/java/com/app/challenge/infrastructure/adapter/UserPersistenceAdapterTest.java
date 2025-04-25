@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Arrays;
 import java.util.UUID;
 
 
@@ -31,12 +31,12 @@ class UserPersistenceAdapterTest {
     @DisplayName("Debe guardar y retornar correctamente un usuario")
     void shouldSaveUserSuccessfully() {
         // Arrange
-        var user = new User(
+        User user = new User(
             UUID.randomUUID(),
             "Juan",
             "juan@mail.com",
             "HunterApp2",
-            List.of(new Phone("1234567", "1", "57")),
+            Arrays.asList(new Phone("1234567", "1", "57")),
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),
@@ -45,7 +45,7 @@ class UserPersistenceAdapterTest {
         );
 
         // Act
-        var savedUser = this.adapter.save(user);
+        User savedUser = this.adapter.save(user);
 
         // Assert
         Assertions.assertNotNull(savedUser.getId());
@@ -58,12 +58,12 @@ class UserPersistenceAdapterTest {
     @DisplayName("Debe retornar verdadero si el email existe en la base de datos")
     void shouldReturnTrueIfEmailExists() {
         // Arrange: primero persistimos uno
-        var user = new User(
+        User user = new User(
             UUID.randomUUID(),
             "Maria",
             "maria@mail.com",
             "HunterApp2",
-            List.of(),
+            Arrays.asList(),
             LocalDateTime.now(),
             LocalDateTime.now(),
             LocalDateTime.now(),

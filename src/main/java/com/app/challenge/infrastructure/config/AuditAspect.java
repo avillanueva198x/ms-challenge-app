@@ -23,7 +23,8 @@ public class AuditAspect {
     @Before("saveMethodPointcut() && args(entity)")
     public void beforeSave(Object entity) {
         log.debug("Antes de guardar la entidad: {}", entity.getClass().getSimpleName());
-        if (entity instanceof BaseModel baseModel) {
+        if (entity instanceof BaseModel) {
+            BaseModel baseModel = (BaseModel) entity;
             log.debug("Aplicando auditoría a: {}", baseModel.getClass().getSimpleName());
 
             LocalDateTime now = LocalDateTime.now();

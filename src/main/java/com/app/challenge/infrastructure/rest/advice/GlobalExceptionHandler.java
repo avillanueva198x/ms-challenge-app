@@ -1,5 +1,6 @@
 package com.app.challenge.infrastructure.rest.advice;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestControllerAdvice
@@ -36,7 +38,7 @@ public class GlobalExceptionHandler {
             .getFieldErrors()
             .stream()
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
-            .toList();
+            .collect(Collectors.toList());
 
         String mensaje = String.join(" - ", errors);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -50,6 +52,12 @@ public class GlobalExceptionHandler {
             .body(new ErrorResponse("Error interno del servidor"));
     }
 
-    public record ErrorResponse(String mensaje) {
+    @Data
+    private static class ErrorResponse {
+        String mensaje;
+
+        public ErrorResponse(String mensaje) {
+            this.mensaje = mensaje;
+        }
     }
 }
