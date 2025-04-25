@@ -24,29 +24,36 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-}
+    all {
+        // Exclusión agresiva de módulos conflictivos con JBoss + Java 8
+        exclude group: 'jakarta.xml.bind', module: 'jakarta.xml.bind-api'
+        exclude group: 'jakarta.activation', module: 'jakarta.activation-api'
+        exclude group: 'org.glassfish.jaxb', module: 'jaxb-runtime'
+        exclude group: 'com.sun.xml.bind', module: 'jaxb-core'
+        exclude group: 'com.sun.xml.bind', module: 'jaxb-impl'
+        exclude group: 'org.jvnet.staxex', module: 'stax-ex'
+        exclude group: 'com.sun.xml.fastinfoset', module: 'FastInfoset'
+        exclude group: 'com.sun.istack', module: 'txw2'
+        exclude group: 'org.ow2.asm', module: 'asm' // usado por ByteBuddy internamente
+        exclude group: 'net.bytebuddy', module: 'byte-buddy-agent'
 
-configurations.all {
-    exclude group: 'jakarta.xml.bind', module: 'jakarta.xml.bind-api'
-    exclude group: 'jakarta.activation', module: 'jakarta.activation-api'
-    exclude group: 'org.glassfish.jaxb', module: 'jaxb-runtime'
-    exclude group: 'com.sun.xml.bind', module: 'jaxb-core'
-    exclude group: 'com.sun.xml.bind', module: 'jaxb-impl'
-    exclude group: 'org.jvnet.staxex', module: 'stax-ex'
-    exclude group: 'com.sun.xml.fastinfoset', module: 'FastInfoset'
-    exclude group: 'com.sun.istack', module: 'txw2'
-
-    resolutionStrategy {
-        eachDependency { details ->
+        resolutionStrategy.eachDependency { details ->
+            // Evitar versiones modernas con module-info.class
             if (details.requested.name == 'log4j-api') {
-                details.useVersion '2.13.3' // Evita module-info.class
+                details.useVersion '2.13.3'
+            }
+            if (details.requested.name == 'byte-buddy') {
+                details.useVersion '1.10.20' // estable y sin module-info
+            }
+            if (details.requested.name.startsWith("jackson-")) {
+                details.useVersion '2.11.4' // compatible con Java 8 sin META-INF/versions
             }
         }
     }
 }
 
 dependencies {
-    // Spring Boot starters
+    // Spring Boot starters (excluyendo Tomcat embebido)
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
@@ -58,20 +65,23 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    // Swagger / OpenAPI
+    // Swagger
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 
-    // Logging estructurado
+    // Logging
     implementation 'net.logstash.logback:logstash-logback-encoder:6.6'
 
-    // JDBC y bases de datos
+    // Base de datos
     implementation 'com.mysql:mysql-connector-j:8.0.33'
-    runtimeOnly 'com.h2database:h2' // para local/dev
+    runtimeOnly 'com.h2database:h2' // solo local/dev
 
-    // JWT (Java 8 compatible)
+    // JWT Java 8
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    // JAXB Java 8
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -108,13 +118,16 @@ bootWar {
     archiveFileName = 'ms-challenge-app.war'
 }
 
+// 🔥 Filtra clases conflictivas para JBoss
 tasks.withType(War).configureEach {
     doFirst {
-        println "🚫 Excluyendo module-info.class y versiones incompatibles..."
+        println "🧹 Limpiando WAR de module-info y versiones META-INF..."
     }
 
+    // Evita errores por Java 9+ (multi-release jars)
     exclude('**/module-info.class')
     exclude('META-INF/versions/**')
+    exclude('META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA')
 }
 
 checkstyle {
