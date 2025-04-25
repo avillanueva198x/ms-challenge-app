@@ -55,8 +55,7 @@ public class GlobalExceptionHandler {
     @Data
     private static class ErrorResponse {
         String mensaje;
-
-        public ErrorResponse(String mensaje) {
+        ErrorResponse(String mensaje) {
             this.mensaje = mensaje;
         }
     }

@@ -26,27 +26,56 @@ configurations {
     }
 }
 
+configurations.all {
+    exclude group: 'jakarta.xml.bind', module: 'jakarta.xml.bind-api'
+    exclude group: 'jakarta.activation', module: 'jakarta.activation-api'
+
+    resolutionStrategy {
+        eachDependency { details ->
+            if (details.requested.name == 'log4j-api') {
+                details.useVersion '2.13.3' // Evita module-info.class
+            }
+        }
+    }
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web' // verás abajo que excluiremos Tomcat
+    // Spring Boot starters
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    implementation 'org.springdoc:springdoc-openapi-ui:1.6.15' // versión compatible con Spring Boot 2.7
+    // Swagger / OpenAPI
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
 
-    implementation 'net.logstash.logback:logstash-logback-encoder:6.6' // compatible con Java 8
+    // Logging estructurado
+    implementation 'net.logstash.logback:logstash-logback-encoder:6.6'
+
+    // JDBC y bases de datos
     implementation 'com.mysql:mysql-connector-j:8.0.33'
+    runtimeOnly 'com.h2database:h2' // para local/dev
 
-    runtimeOnly 'com.h2database:h2'
-
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.2' // última versión compatible con Java 8
+    // JWT (Java 8 compatible)
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
+    // JAXB compatible con Java 8 (para evitar errores de despliegue)
+    implementation 'javax.xml.bind:jaxb-api:2.3.1'
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
+    // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
