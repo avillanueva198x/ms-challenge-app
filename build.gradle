@@ -29,6 +29,12 @@ configurations {
 configurations.all {
     exclude group: 'jakarta.xml.bind', module: 'jakarta.xml.bind-api'
     exclude group: 'jakarta.activation', module: 'jakarta.activation-api'
+    exclude group: 'org.glassfish.jaxb', module: 'jaxb-runtime'
+    exclude group: 'com.sun.xml.bind', module: 'jaxb-core'
+    exclude group: 'com.sun.xml.bind', module: 'jaxb-impl'
+    exclude group: 'org.jvnet.staxex', module: 'stax-ex'
+    exclude group: 'com.sun.xml.fastinfoset', module: 'FastInfoset'
+    exclude group: 'com.sun.istack', module: 'txw2'
 
     resolutionStrategy {
         eachDependency { details ->
@@ -67,10 +73,6 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
-    // JAXB compatible con Java 8 (para evitar errores de despliegue)
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.1'
-
     // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -104,6 +106,15 @@ bootJar {
 bootWar {
     enabled = true
     archiveFileName = 'ms-challenge-app.war'
+}
+
+tasks.withType(War).configureEach {
+    doFirst {
+        println "🚫 Excluyendo module-info.class y versiones incompatibles..."
+    }
+
+    exclude('**/module-info.class')
+    exclude('META-INF/versions/**')
 }
 
 checkstyle {
