@@ -5,7 +5,8 @@ spring:
     application:
         name: ms-challenge-app
     config:
-        import: optional:file:D:/_PROGRAMAS/jboss-eap-7.3/standalone/configuration/ms-challenge-app.properties
+        import: optional:file:/C:/_INSTALADORES/jboss-eap-7.2/standalone/configuration/ms-challenge-app.properties
+
 
 management:
     endpoints:

@@ -23,4 +23,5 @@ public class PasswordPropertiesHolder {
     public static PasswordRegexProperties get() {
         return regexProperties;
     }
+
 }
